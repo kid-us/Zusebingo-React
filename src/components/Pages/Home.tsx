@@ -5,6 +5,7 @@ import { useState } from "react";
 
 const Home = () => {
   const navigate = useNavigate();
+
   // Balance Error
   const [balanceError, setBalanceError] = useState(false);
 
@@ -17,8 +18,6 @@ const Home = () => {
       navigate(`/card-picker?category=${category}`);
     }
   };
-
-  // Handle Create Game
 
   return (
     <div className="bg">
@@ -75,9 +74,11 @@ const Home = () => {
             />
 
             <div className="mt-8 text-center">
-              <button className="py-3 text-black btn-bg w-full rounded font-poppins text-lg shadow shadow-zinc-950 chakra">
-                Create Group Game
-              </button>
+              <Link to={"/create-group"}>
+                <p className="py-3 text-black btn-bg w-full rounded font-poppins text-lg shadow shadow-zinc-950 chakra">
+                  Create Group Game
+                </p>
+              </Link>
             </div>
 
             <p className="mt-5 text-sm ">

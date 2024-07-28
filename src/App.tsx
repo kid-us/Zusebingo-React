@@ -12,6 +12,7 @@ import History from "./components/Pages/History";
 import Balance from "./components/Pages/Balance";
 import LeaderBoard from "./components/Pages/LeaderBoard";
 import License from "./components/Pages/License";
+import Groups from "./components/Pages/Groups";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
       <Route path="/history" element={<History />} />
       <Route path="/balance" element={<Balance />} />
       <Route path="/leaderboard" element={<LeaderBoard />} />
+      <Route path="/groups" element={<Groups />} />
       <Route path="/license" element={<License />} />
 
       {/* <Route

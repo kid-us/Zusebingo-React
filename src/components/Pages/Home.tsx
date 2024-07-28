@@ -5,7 +5,10 @@ import { useState } from "react";
 
 const Home = () => {
   const navigate = useNavigate();
+  // Balance Error
   const [balanceError, setBalanceError] = useState(false);
+
+  // Handle Category
   const handleCategory = (category: string) => {
     let balance = 20;
     if (balance < Number(category)) {
@@ -15,12 +18,28 @@ const Home = () => {
     }
   };
 
+  // Handle Create Game
+
   return (
     <div className="bg">
       <Nav />
       <div className="container mx-auto flex justify-center align-middle h-auto pt-24">
         <div className="lg:w-[38%] px-2">
           <p className="lg:mt-5 lg:mb-4 text-2xl">Choose Bet Category</p>
+
+          <p className="text-white chakra">
+            <span className="bi-gift-fill text-red-700"></span> Rev up the Fun:
+            Join Group Games & Score Big Wins!
+          </p>
+
+          <div className="mt-5 text-center w-full">
+            <Link to={"/groups"}>
+              <p className="py-3 text-black btn-bg w-full rounded font-poppins text-lg shadow shadow-zinc-950 chakra">
+                Join Group Games
+              </p>
+            </Link>
+          </div>
+
           {balanceError && (
             <div className="flex justify-between bg-red-600 rounded py-1 my-5">
               <p className=" animate__animated animate__fadeIn text-gray-100 ps-5 text-sm">
@@ -60,6 +79,7 @@ const Home = () => {
                 Create Group Game
               </button>
             </div>
+
             <p className="mt-5 text-sm ">
               Please reach out to our{" "}
               <Link to="https://t.me/+UGpMJ8GPTVw2MGUx" className="text-white">

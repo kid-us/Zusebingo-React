@@ -1,8 +1,39 @@
 // import { useLocation } from "react-router-dom";
 import Nav from "../Nav/Nav";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import socket from "../../services/socket";
 
 const CardPicker = () => {
+  useEffect(() => {
+    const handleConnect = () => {
+      console.log("Connected!");
+    };
+
+    socket.on("connect", handleConnect);
+
+    const data = {
+      username: "Lorem",
+      user_id: 138,
+      cards: [29],
+      room: "ten",
+    };
+
+    socket.emit("join_game", data, (response: any) => {
+      console.log("Server response:", response);
+    });
+
+    socket.on("card_taken", (data: any) => {
+      console.log(data);
+    });
+
+    // Clean up the effect
+    return () => {
+      socket.off("connect", handleConnect);
+    };
+  }, []);
+
+  // 1: Card already exist  2 : Already games exist, 3 : Balance
+
   //   const location = useLocation();
   //   const searchParams = new URLSearchParams(location.search);
   //   const category = searchParams.get("category");

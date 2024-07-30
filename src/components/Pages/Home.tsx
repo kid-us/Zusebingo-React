@@ -97,7 +97,7 @@ const Home = () => {
 
                 className="text-white"
               >
-                Telegram
+                Telegramss
               </Link>{" "}
               customer support for assistance.
             </p>

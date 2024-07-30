@@ -29,8 +29,8 @@ function App() {
       <Route path="/leaderboard" element={<LeaderBoard />} />
       <Route path="/groups" element={<Groups />} />
       <Route path="/license" element={<License />} />
-      <Route path="/yakobe" element={<Yakobe />} />
       <Route path="/play" element={<Game />}></Route>
+      <Route path="/yakobe" element={<Yakobe />} />
 
       {/* Not Protected */}
 

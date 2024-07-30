@@ -55,14 +55,14 @@ const CardPicker = () => {
   };
 
   return (
-    <div className="bg2 pb-5">
+    <div className="bg lg:h-[100vh] h-[auto] pb-5">
       <Nav />
-      <div className="container mx-auto flex justify-center align-middle pt-24">
-        <div className="lg:w-[50%] lg:px-2">
+      <div className="container mx-auto flex justify-center pt-24 lg:px-0 px-2">
+        <div className="lg:w-[50%] w-full lg:px-2">
           <p className="lg:mt-4 lg:mb-4 text-xl font-poppins">
             Select Your Playing Cards
           </p>
-          <div className="grid lg:grid-cols-12 grid-cols-7 mt-6 h-auto">
+          <div className="grid lg:grid-cols-12 md:grid-cols-12 grid-cols-8 mt-6 h-auto">
             {numbers.map((number) => (
               <div
                 key={number}
@@ -71,13 +71,13 @@ const CardPicker = () => {
                   selectedNumbers.includes(number)
                     ? "bg-gray-900 shadow-none"
                     : "bg-white cursor-pointer hover:shadow-none"
-                }   shadow-zinc-900 rounded shadow lg:w-12 lg:h-12 w-11 h-11 me-1 mb-2`}
+                }   shadow-zinc-900 rounded shadow me-1 mb-2 lg:p-2 p-1`}
               >
                 <p
-                  className={`text-center chakra pt-2 ${
+                  className={`text-center chakra pt-1 ${
                     selectedNumbers.includes(number)
                       ? "text-gray-400"
-                      : "text-gray-600"
+                      : "text-red-700"
                   } text-xl`}
                 >
                   {number}

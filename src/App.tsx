@@ -14,6 +14,8 @@ import LeaderBoard from "./components/Pages/LeaderBoard";
 import License from "./components/Pages/License";
 import Groups from "./components/Pages/Groups";
 import CreateGroup from "./components/Pages/CreateGroup";
+import Yakobe from "./components/Pages/Yakobe";
+import Game from "./components/Pages/Game";
 
 function App() {
   return (
@@ -27,6 +29,8 @@ function App() {
       <Route path="/leaderboard" element={<LeaderBoard />} />
       <Route path="/groups" element={<Groups />} />
       <Route path="/license" element={<License />} />
+      <Route path="/yakobe" element={<Yakobe />} />
+      <Route path="/play" element={<Game />}></Route>
 
       {/* Not Protected */}
 

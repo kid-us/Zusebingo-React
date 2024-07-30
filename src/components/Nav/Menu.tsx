@@ -38,7 +38,11 @@ const Menu = ({ menu, onMenu }: Props) => {
         <hr className="lg:hidden py-4 border[1px] border-zinc-950 " />
 
         {navMenu.map((menus) => (
-          <Link key={menus.icon} to={menus.link} className="flex lg:mb-8 mb-5">
+          <Link
+            key={menus.icon}
+            to={menus.link}
+            className="flex lg:mb-8 mb-5 hover:text-gray-800"
+          >
             <p className={`${menus.icon} text-white text-2xl me-4`}></p>
             <p
               className={`lg:text-xl ${

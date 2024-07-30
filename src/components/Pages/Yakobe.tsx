@@ -2,67 +2,67 @@
 import Nav from "../Nav/Nav";
 import { useEffect, useState } from "react";
 import socket from "../../services/socket";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
-const CardPicker = () => {
-  const navigate = useNavigate();
+const Yakobe = () => {
   const location = useLocation();
+
   const searchParams = new URLSearchParams(location.search);
   const category = searchParams.get("category");
-
-  const numbers = Array.from({ length: 100 }, (_, i) => i + 1);
 
   const [selectedNumbers, setSelectedNumbers] = useState<number[]>([]);
 
   useEffect(() => {
-    // Connect
     socket.on("connect", () => {
       console.log("Connected");
     });
 
-    // Enter Room
     let room = { room: category };
-    socket.emit("enter_room", room, (response: any) => {
-      setSelectedNumbers(response);
-    });
 
-    // Card Taken
-    socket.on("cardTaken", (response: number[]) => {
+    socket.emit("enter_room", room, (response: any) => {
+      console.log(response);
       setSelectedNumbers(response);
     });
-  }, [socket]);
+  }, []);
 
   // 1: Card already exist  2 : Already games exist, 3 : Balance
 
-  // Handle Number selecting
+  //   const location = useLocation();
+  //   const searchParams = new URLSearchParams(location.search);
+  //   const category = searchParams.get("category");
+
+  const numbers = Array.from({ length: 100 }, (_, i) => i + 1);
+
   const handleSelectedNumber = (num: number): void => {
     const data = {
       username: "Lorem",
-      user_id: 138,
+      user_id: 434,
       cards: [num],
       room: "ten",
     };
 
     socket.emit("join_game", data, (response: any) => {
-      console.log(response);
-      if (response[0] === true) {
-        localStorage.setItem("startSecond", response[2]);
-        const board = JSON.stringify(response[3]);
-        localStorage.setItem("board", board);
-        navigate("/play");
-      }
+      console.log("Server response:", response);
     });
+
+    // if (selectedNumbers.length < 3 || selectedNumbers.includes(num)) {
+    // setSelectedNumbers((prevSelected) => {
+    //   // if (prevSelected.includes(num)) {
+    //   //   return prevSelected.filter((number) => number !== num);
+    //   // } else {
+    //   //   return [...prevSelected, num];
+    //   // }
+    // });
+    // }
   };
 
   return (
-    <div className="bg2 pb-5">
+    <div className="bg">
       <Nav />
-      <div className="container mx-auto flex justify-center align-middle pt-24">
+      <div className="container mx-auto flex justify-center align-middle h-auto pt-24">
         <div className="lg:w-[50%] lg:px-2">
-          <p className="lg:mt-4 lg:mb-4 text-xl font-poppins">
-            Select Your Playing Cards
-          </p>
-          <div className="grid lg:grid-cols-12 grid-cols-7 mt-6 h-auto">
+          <p className="lg:mt-4 lg:mb-4 text-2xl">Select Your Playing Cards</p>
+          <div className="grid lg:grid-cols-12 grid-cols-7 mt-6 overflow-y-scroll lg:h-auto h-[60vh] ">
             {numbers.map((number) => (
               <div
                 key={number}
@@ -91,4 +91,4 @@ const CardPicker = () => {
   );
 };
 
-export default CardPicker;
+export default Yakobe;

@@ -1,9 +1,10 @@
 interface Props {
+  numAmount: number;
   amount: string;
   onClick: (category: string) => void;
 }
 
-export const Input = ({ amount, onClick }: Props) => {
+export const Input = ({ amount, numAmount, onClick }: Props) => {
   return (
     <div
       onClick={() => onClick(amount)}
@@ -17,7 +18,7 @@ export const Input = ({ amount, onClick }: Props) => {
           type="number"
           data-category={amount}
           className="cursor-pointer focus:outline-none chakra pt-1 lg:ps-0 ps-3 placeholder:text-black text-xl"
-          placeholder={`${amount} Birr`}
+          placeholder={`${numAmount} Birr`}
           readOnly
         />
       </div>

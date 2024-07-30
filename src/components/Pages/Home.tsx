@@ -11,6 +11,8 @@ const Home = () => {
 
   // Handle Category
   const handleCategory = (category: string) => {
+    console.log(category);
+
     let balance = 20;
     if (balance < Number(category)) {
       setBalanceError(true);
@@ -24,7 +26,9 @@ const Home = () => {
       <Nav />
       <div className="container mx-auto flex justify-center align-middle h-auto pt-24">
         <div className="lg:w-[38%] px-2">
-          <p className="lg:mt-5 lg:mb-4 text-2xl">Choose Bet Category</p>
+          <p className="lg:mt-5 lg:mb-4 text-2xl font-poppins">
+            Choose Bet Category
+          </p>
 
           <p className="text-white chakra">
             <span className="bi-gift-fill text-red-700"></span> Rev up the Fun:
@@ -57,19 +61,23 @@ const Home = () => {
           <form className="pt-5">
             {/* <Input amount="5" /> */}
             <Input
-              amount="10"
+              numAmount={10}
+              amount="ten"
               onClick={(category: string) => handleCategory(category)}
             />
             <Input
-              amount="25"
+              numAmount={25}
+              amount="twenty-five"
               onClick={(category: string) => handleCategory(category)}
             />
             <Input
-              amount="50"
+              numAmount={50}
+              amount="fifty"
               onClick={(category: string) => handleCategory(category)}
             />
             <Input
-              amount="100"
+              numAmount={100}
+              amount="hundred"
               onClick={(category: string) => handleCategory(category)}
             />
 
@@ -81,7 +89,7 @@ const Home = () => {
               </Link>
             </div>
 
-            <p className="mt-5 text-sm ">
+            <p className="mt-5 text-sm font-poppins">
               Please reach out to our{" "}
               <Link to="https://t.me/+UGpMJ8GPTVw2MGUx" className="text-white">
                 Telegram

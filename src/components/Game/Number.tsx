@@ -7,10 +7,10 @@ interface Props {
 const Number = ({ number, calledNum, markedNumbers, onMark }: Props) => {
   const style =
     number === "FREE" &&
-    "bg-red-700 text-white border border-gray-600 py-[5px]";
+    "bg-red-700 text-white border border-gray-600 p-[14px]";
 
   const otherStyles =
-    "mb-1 rounded-md text-center font-poppins text-[20px] font-extrabold shadow shadow-zinc-400 cursor-pointer lg:p-[14px] py-[24px] px-[14px] m-[3px] ";
+    "mb-1 rounded-md text-center font-poppins text-[20px] font-extrabold shadow shadow-zinc-400 cursor-pointer p-[14px] m-[3px] ";
 
   // Handle Mark
   const handleMark = (num: number) => {

@@ -23,10 +23,17 @@ const Game = () => {
 
   useEffect(() => {
     const fetchData = () => {
-      const storedData = localStorage.getItem("board");
+      //   const storedData = localStorage.getItem("board");
+      const storedData = {
+        B: [5, 1, 2, 8, 3],
+        I: [18, 27, 29, 24, 19],
+        N: [35, 42, "FREE", 33, 43],
+        G: [59, 48, 49, 50, 53],
+        O: [75, 73, 61, 62, 72],
+      };
       if (storedData) {
-        const data: BingoBoard = JSON.parse(storedData);
-        setBoard(data);
+        // const data: BingoBoard = JSON.parse(storedData);
+        setBoard(storedData);
       } else {
         console.error("No data found in local storage");
       }

@@ -10,14 +10,14 @@ const Number = ({ number, calledNum, markedNumbers, onMark }: Props) => {
     "bg-red-700 text-white border border-gray-600 py-[5px]";
 
   const otherStyles =
-    "mb-1 rounded-md text-center font-poppins text-[20px] font-extrabold shadow shadow-zinc-400 cursor-pointer lg:p-[14px] py-[13px] px-[13px] m-[3px] ";
+    "mb-1 rounded-md text-center font-poppins text-[20px] font-extrabold shadow shadow-zinc-400 cursor-pointer lg:p-[14px] py-[24px] px-[14px] m-[3px] ";
 
   // Handle Mark
   const handleMark = (num: number) => {
     if (markedNumbers.includes(num)) {
-      return "bg-red-700 text-white border border-gray-200 py-[5px]";
+      return "bg-red-700 text-white border border-gray-200";
     } else {
-      return "bg-white text-red-800 py-[5px] border border-gray-200";
+      return "bg-white text-red-800 border border-gray-200";
     }
   };
 

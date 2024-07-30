@@ -23,6 +23,8 @@ const Protected = ({ children }: ProtectedProps) => {
           },
         })
         .then((response) => {
+          console.log(response);
+
           //   login();
         })
         .catch(() => {

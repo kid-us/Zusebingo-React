@@ -91,7 +91,12 @@ const Home = () => {
 
             <p className="mt-5 text-sm font-poppins">
               Please reach out to our{" "}
-              <Link to="https://t.me/+UGpMJ8GPTVw2MGUx" className="text-white">
+              <Link
+                to={"/play"}
+                // to="https://t.me/+UGpMJ8GPTVw2MGUx"
+
+                className="text-white"
+              >
                 Telegram
               </Link>{" "}
               customer support for assistance.

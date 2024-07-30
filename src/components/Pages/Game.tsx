@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Number from "../Game/Number";
 import CallOut from "../Game/CallOut";
+import Bingo75 from "../Game/Bingo75";
 
 interface BingoBoard {
   B: number[];
@@ -54,19 +55,21 @@ const Game = () => {
   return (
     <div className="bg2 h-[100vh] px-1">
       <div className="container mx-auto">
-        <div className="flex lg:justify-center md:justify-center justify-start mb-5">
+        <div className="flex lg:justify-center md:justify-center justify-start lg:ms-0 md:ms-0 ms-3">
           <CallOut calledNumber={calledNumber} />
         </div>
+        <Bingo75 calledNum={calledNumber} />
         <div className="flex justify-center">
           <div>
-            <div className="grid grid-cols-5 text-center text-white font-extrabold">
+            {/* Bingo Title */}
+            <div className="grid grid-cols-5 text-center text-Black font-extrabold">
               <h1 className="text-xl">B</h1>
               <h1 className="text-xl">I</h1>
               <h1 className="text-xl">N</h1>
               <h1 className="text-xl">G</h1>
               <h1 className="text-xl">O</h1>
             </div>
-
+            {/* Bingo Numbers */}
             <div className="grid grid-cols-5 mt-2">
               {/* B */}
               <div>
@@ -133,7 +136,7 @@ const Game = () => {
                 ))}
               </div>
             </div>
-
+            {/* Infos */}
             <div className="flex justify-between">
               <p className="text-white font-poppins mt-3 ps-2">
                 Payout{" "}
@@ -144,6 +147,7 @@ const Game = () => {
                 <span className="text-black font-bold font-poppins">#20</span>
               </p>
             </div>
+            {/* Bingo Button */}
             <div className="mt-8 text-center px-2">
               <button className="py-3 text-black btn-bg w-full rounded font-poppins text-lg shadow shadow-zinc-950 chakra">
                 Bingo

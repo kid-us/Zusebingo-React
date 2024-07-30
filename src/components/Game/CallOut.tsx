@@ -24,7 +24,7 @@ const CallOut = ({ calledNumber }: Props) => {
             {calledNumber}
           </p>
         </div>
-        <div className="lg:grid md:grid grid lg:col-span-8 md:col-span-6 lg:ms-8 md:-7 ms-1 mt-2">
+        <div className="lg:grid md:grid grid lg:col-span-8 md:col-span-6 lg:ms-8 md:ms-7 ms-1 mt-2">
           <div className="flex gap-x-1 overflow-hidden">
             {numbers.length > 0 &&
               lastEightNumbers.map((num) => (

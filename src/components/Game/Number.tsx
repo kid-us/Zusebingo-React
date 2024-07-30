@@ -7,15 +7,15 @@ interface Props {
 const Number = ({ number, calledNum, markedNumbers, onMark }: Props) => {
   const style =
     number === "FREE" &&
-    "bg-red-700 text-white border border-gray-600 p-[14px]";
+    "bg-red-700 text-white border border-gray-600 p-[13px]";
 
   const otherStyles =
-    "mb-1 rounded-md text-center font-poppins text-[20px] font-extrabold shadow shadow-zinc-400 cursor-pointer p-[14px] m-[3px] ";
+    "mb-1 rounded-md text-center font-poppins text-[20px] font-extrabold shadow shadow-zinc-800 cursor-pointer p-[13px] m-[3px] ";
 
   // Handle Mark
   const handleMark = (num: number) => {
     if (markedNumbers.includes(num)) {
-      return "bg-red-700 text-white border border-gray-200";
+      return "bg-red-700 text-white border border-gray-600";
     } else {
       return "bg-white text-red-800 border border-gray-200";
     }

@@ -46,9 +46,10 @@ const CardPicker = () => {
     socket.emit("join_game", data, (response: any) => {
       console.log(response);
       if (response[0] === true) {
-        localStorage.setItem("startSecond", response[2]);
         const board = JSON.stringify(response[3]);
         localStorage.setItem("board", board);
+        localStorage.setItem("startSecond", response[2]);
+        localStorage.setItem("card", num.toString());
         navigate("/play");
       }
     });

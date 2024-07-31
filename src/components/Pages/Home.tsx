@@ -11,8 +11,6 @@ const Home = () => {
 
   // Handle Category
   const handleCategory = (category: string) => {
-    console.log(category);
-
     let balance = 20;
     if (balance < Number(category)) {
       setBalanceError(true);

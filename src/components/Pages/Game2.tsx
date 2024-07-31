@@ -16,7 +16,7 @@ interface BingoBoard {
   O: number[];
 }
 
-const Game = () => {
+const Game2 = () => {
   const startSeconds = localStorage.getItem("startSecond");
   const cardNo = localStorage.getItem("card");
   let num;
@@ -108,7 +108,6 @@ const Game = () => {
       )}
       {falseWin && <FalseWin />}
       {seconds > 0 && <Counter number={seconds} />}
-
       <div className="bg2 h-[100vh] px-1">
         <div className="container mx-auto">
           <div className="flex lg:justify-center md:justify-center justify-start lg:ms-0 md:ms-0 ms-3">
@@ -219,4 +218,4 @@ const Game = () => {
   );
 };
 
-export default Game;
+export default Game2;

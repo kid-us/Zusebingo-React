@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 
 interface Props {
-  calledNumber: number;
+  calledNumber: number | undefined;
+  totalCall: number[];
 }
 
-const CallOut = ({ calledNumber }: Props) => {
+const CallOut = ({ calledNumber, totalCall }: Props) => {
   const [numbers, setNumbers] = useState<number[]>([]);
   useEffect(() => {
-    setNumbers([...numbers, calledNumber]);
+    if (calledNumber) {
+      setNumbers([...numbers, calledNumber]);
+    }
   }, [calledNumber]);
 
   // Get the last 8 numbers from the array and reverse them
@@ -16,7 +19,8 @@ const CallOut = ({ calledNumber }: Props) => {
   return (
     <div className="lg:ms-16 md:mx-10 mx-1">
       <p className="font-poppins mb-5 mt-2">
-        Total Callout: <span className="chakra text-lg text-white">10</span>
+        Total Callout:{" "}
+        <span className="chakra text-lg text-white">{totalCall.length}</span>
       </p>
       <div className="lg:grid md:grid flex md:grid-cols-7 lg:grid-cols-9 grid-cols-1">
         <div className="col-span-1">

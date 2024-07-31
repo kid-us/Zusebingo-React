@@ -103,7 +103,7 @@ const Game = () => {
   return (
     <>
       {winMessage && <Win />}
-      {loseMessage && (
+      {!loseMessage && (
         <Lose user={winUser ? winUser : ""} payout={totalPayout} />
       )}
       {falseWin && <FalseWin />}

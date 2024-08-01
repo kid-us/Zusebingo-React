@@ -37,8 +37,8 @@ const Yakobe = () => {
   // Handle Number selecting
   const handleSelectedNumber = (num: number): void => {
     const data = {
-      username: "Lorem",
-      user_id: 434,
+      username: "Yakobe",
+      user_id: 138,
       cards: [num],
       room: "ten",
     };
@@ -57,7 +57,7 @@ const Yakobe = () => {
   };
 
   return (
-    <div className="bg lg:h-[100vh] h-[auto] pb-5">
+    <div className="bg lg:h-[100vh] pb-5">
       <Nav />
       <div className="container mx-auto flex justify-center pt-24 lg:px-0 px-2">
         <div className="lg:w-[50%] w-full lg:px-2">

@@ -37,8 +37,8 @@ const CardPicker = () => {
   // Handle Number selecting
   const handleSelectedNumber = (num: number): void => {
     const data = {
-      username: "Lorem",
-      user_id: 138,
+      username: "Kidus",
+      user_id: 434,
       cards: [num],
       room: "ten",
     };
@@ -56,7 +56,7 @@ const CardPicker = () => {
   };
 
   return (
-    <div className="bg lg:h-[100vh] h-[auto] pb-5">
+    <div className="bg2 lg:h-[100vh] h-[auto] pb-5">
       <Nav />
       <div className="container mx-auto flex justify-center pt-24 lg:px-0 px-2">
         <div className="lg:w-[50%] w-full lg:px-2">

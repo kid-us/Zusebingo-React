@@ -8,7 +8,7 @@ import Lose from "../Modal/Lose";
 import FalseWin from "../Modal/FalseWin";
 // import Bingo75 from "../Game/Bingo75";
 
-interface BingoBoard {
+export interface BingoBoard {
   B: number[];
   I: number[];
   N: (number | string)[];
@@ -16,7 +16,7 @@ interface BingoBoard {
   O: number[];
 }
 
-const Game = () => {
+const Game2 = () => {
   const startSeconds = localStorage.getItem("startSecond");
   const cardNo = localStorage.getItem("card");
   let num;
@@ -33,7 +33,8 @@ const Game = () => {
   const [loseMessage, setLoseMessage] = useState<boolean>(false);
   const [falseWin, setFalseWin] = useState<boolean>(false);
   const [winUser, setWinUser] = useState();
-
+  const [winnerBoard, setWinnerBoard] = useState<BingoBoard>();
+  const [winnerPattern, setWinnerPattern] = useState<(number | string)[]>([]);
   const [board, setBoard] = useState<BingoBoard>({
     B: [],
     I: [],
@@ -76,6 +77,17 @@ const Game = () => {
       setCaller(data.current);
       setCalledNumbers(data.all);
     });
+
+    socket.on("game_over", (data: any) => {
+      console.log(data);
+      if (data.winner !== "Kidus") {
+        setLoseMessage(true);
+        setWinUser(data.winner);
+        setWinnerPattern(data.patterns);
+        setWinnerBoard(data.board);
+      }
+      // localStorage.clear();
+    });
   }, [socket]);
 
   // Handle Bingo
@@ -88,33 +100,32 @@ const Game = () => {
     socket.emit("bingo", data, (response: any) => {
       console.log(response);
       response[0] === true ? setWinMessage(true) : setFalseWin(true);
-
-      localStorage.clear();
-    });
-
-    socket.on("game_over", (data: any) => {
-      console.log(data);
-      setWinUser(data.winner);
-      setLoseMessage(true);
-      localStorage.clear();
+      // localStorage.clear();
     });
   };
 
   return (
     <>
       {winMessage && <Win />}
-      {!loseMessage && (
-        <Lose user={winUser ? winUser : ""} payout={totalPayout} />
+      {loseMessage && (
+        <Lose
+          pattern={winnerPattern}
+          winnerBoard={winnerBoard}
+          user={winUser ? winUser : ""}
+          payout={totalPayout}
+        />
       )}
       {falseWin && <FalseWin />}
       {seconds > 0 && <Counter number={seconds} />}
 
       <div className="bg2 h-[100vh] px-1">
+        <button onClick={() => localStorage.clear()}>clear</button>
+
         <div className="container mx-auto">
           <div className="flex lg:justify-center md:justify-center justify-start lg:ms-0 md:ms-0 ms-3">
             <CallOut calledNumber={caller} totalCall={calledNumbers} />
           </div>
-          {/* <Bingo75 calledNum={calledNumber} /> */}
+          {/* <Bingo75 calledNum={calledNumbers} /> */}
           <div className="flex justify-center mt-10">
             <div>
               {/* Bingo Title */}
@@ -219,4 +230,4 @@ const Game = () => {
   );
 };
 
-export default Game;
+export default Game2;

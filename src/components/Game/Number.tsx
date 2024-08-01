@@ -30,7 +30,7 @@ const Number: React.FC<Props> = ({ number, calledNum, markedNumbers }) => {
       onClick={() => handleClick(number)}
       className={`${baseStyle} ${
         isFree ? freeStyle : isClicked ? clickedStyle : numberStyle
-      } ${isCalled ? "blink" : ""}`}
+      }  ${number !== "FREE" && !isClicked && isCalled ? "blink" : ""}`}
     >
       {number}
     </p>

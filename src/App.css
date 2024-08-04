@@ -18,6 +18,11 @@
   background-color: var(--btnBg);
 }
 
+body {
+  background-color: #ffe53b;
+  background: linear-gradient(147deg, #ffe53b 0%, #ff2525 74%);
+}
+
 /* html body {
   background: linear-gradient(147deg, #ffe53b 0%, #ff2525 74%);
 } */

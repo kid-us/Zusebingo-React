@@ -22,7 +22,7 @@ const Register = () => {
   const [passwordType, setPasswordType] = useState(true);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState(false);
-
+  const [loader, setLoader] = useState<boolean>(false);
   const {
     register,
     handleSubmit,
@@ -34,6 +34,7 @@ const Register = () => {
       setConfirmPasswordError(true);
       return;
     }
+    setLoader(true);
     console.log(data);
   };
   return (
@@ -185,9 +186,15 @@ const Register = () => {
             </div>
 
             <div className="mt-8 text-center">
-              <button className="py-3 text-black btn-bg w-full rounded font-poppins text-lg shadow shadow-zinc-950 chakra">
-                Register
-              </button>
+              {loader ? (
+                <p className="py-3 text-black btn-bg w-full rounded flex justify-center font-poppins text-lg shadow shadow-zinc-950 chakra">
+                  <span className="loader rounded"></span>
+                </p>
+              ) : (
+                <button className="py-3 text-black btn-bg w-full rounded font-poppins text-lg shadow shadow-zinc-950 chakra">
+                  Register
+                </button>
+              )}
             </div>
             <p className="mt-5 text-sm">
               Already have an Account?{" "}

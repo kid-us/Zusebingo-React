@@ -21,6 +21,7 @@ type FormData = z.infer<typeof schema>;
 const Login = () => {
   const navigate = useNavigate();
 
+  const [loader, setLoader] = useState<boolean>(false);
   const [loginError, setLoginError] = useState(false);
   const [passwordType, setPasswordType] = useState(true);
 
@@ -31,6 +32,7 @@ const Login = () => {
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const onSubmit = (data: FieldValues) => {
+    setLoader(true);
     const logData = {
       username: data.username,
       password: data.password,
@@ -65,6 +67,7 @@ const Login = () => {
       .catch((error) => {
         console.log(error);
         setLoginError(true);
+        setLoader(false);
       });
   };
   return (
@@ -141,9 +144,15 @@ const Login = () => {
             </p>
 
             <div className="mt-8 text-center">
-              <button className="py-3 text-black btn-bg w-full rounded font-poppins text-lg shadow shadow-zinc-950 chakra">
-                Login
-              </button>
+              {loader ? (
+                <p className="py-3 text-black btn-bg w-full rounded flex justify-center font-poppins text-lg shadow shadow-zinc-950 chakra">
+                  <span className="loader rounded"></span>
+                </p>
+              ) : (
+                <button className="py-3 text-black btn-bg w-full rounded font-poppins text-lg shadow shadow-zinc-950 chakra">
+                  Login
+                </button>
+              )}
             </div>
             <p className="mt-5 text-sm font-poppins">
               Don't have an Account?{" "}

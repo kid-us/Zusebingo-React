@@ -18,6 +18,9 @@ const CardPicker = () => {
 
   const [selectedNumbers, setSelectedNumbers] = useState<number[]>([]);
 
+  const [error, setError] = useState<boolean>(false);
+  const [errorMsg, setErrorMsg] = useState<string>("");
+
   useEffect(() => {
     // Connect
     socket.on("connect", () => {
@@ -64,44 +67,72 @@ const CardPicker = () => {
         localStorage.setItem("startSecond", response[2]);
         localStorage.setItem("card", num.toString());
         navigate("/play");
+      } else {
+        if (response[1] === 1) {
+          setError(true);
+          setErrorMsg(
+            "Number already taken by another player, choose different one."
+          );
+        } else if (response[1] === 2) {
+          setError(true);
+          setErrorMsg("You already exist in this game.");
+        } else {
+          setError(true);
+          setErrorMsg(
+            "Your balance is low. Trying to cheat will make ur account banned."
+          );
+        }
       }
     });
   };
 
   return (
-    <div className="bg2 lg:h-[100vh] h-[auto] pb-5">
-      <Nav />
-      <div className="container mx-auto flex justify-center pt-24 lg:px-0 px-2">
-        <div className="lg:w-[50%] w-full lg:px-2">
-          <p className="lg:mt-4 lg:mb-4 text-xl font-poppins">
-            Select Your Playing Cards
-          </p>
-          <div className="grid lg:grid-cols-12 md:grid-cols-12 grid-cols-8 mt-6 h-auto">
-            {numbers.map((number) => (
-              <div
-                key={number}
-                onClick={() => handleSelectedNumber(number)}
-                className={`${
-                  selectedNumbers.includes(number)
-                    ? "bg-gray-900 shadow-none"
-                    : "bg-white cursor-pointer hover:shadow-none"
-                }   shadow-zinc-900 rounded shadow me-1 mb-2 lg:p-2 p-1`}
-              >
-                <p
-                  className={`text-center chakra pt-1 ${
+    <>
+      {error && (
+        <div className="fixed top-20 right-1 bg-red-500 rounded text-white p-2 lg:w-[20%] w-full shadow-md shadow-zinc-900">
+          <div className="relative">
+            <p className="font-poppins text-sm">{errorMsg}</p>
+            <button
+              onClick={() => setError(false)}
+              className="absolute bi-x-lg top-0 right-0"
+            ></button>
+          </div>
+        </div>
+      )}
+      <div className="bg2 lg:h-[100vh] h-[auto] pb-5">
+        <Nav />
+        <div className="container mx-auto flex justify-center pt-24 lg:px-0 px-2">
+          <div className="lg:w-[50%] w-full lg:px-2">
+            <p className="lg:mt-4 lg:mb-4 text-xl font-poppins">
+              Select Your Playing Cards
+            </p>
+            <div className="grid lg:grid-cols-12 md:grid-cols-12 grid-cols-8 mt-6 h-auto">
+              {numbers.map((number) => (
+                <div
+                  key={number}
+                  onClick={() => handleSelectedNumber(number)}
+                  className={`${
                     selectedNumbers.includes(number)
-                      ? "text-gray-400"
-                      : "text-red-700"
-                  } text-xl`}
+                      ? "bg-gray-900 shadow-none"
+                      : "bg-white cursor-pointer hover:shadow-none"
+                  }   shadow-zinc-900 rounded shadow me-1 mb-2 lg:p-2 p-1`}
                 >
-                  {number}
-                </p>
-              </div>
-            ))}
+                  <p
+                    className={`text-center chakra pt-1 ${
+                      selectedNumbers.includes(number)
+                        ? "text-gray-400"
+                        : "text-red-700"
+                    } text-xl`}
+                  >
+                    {number}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

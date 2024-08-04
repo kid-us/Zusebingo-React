@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const CreateGroup = () => {
   // Handle Category
-  const handleCategory = (category: string) => {
+  const handleCategory = (category: number) => {
     console.log(category);
   };
 
@@ -23,22 +23,22 @@ const CreateGroup = () => {
             <Input
               numAmount={10}
               amount="10"
-              onClick={(category: string) => handleCategory(category)}
+              onClick={(category: number) => handleCategory(category)}
             />
             <Input
               numAmount={25}
               amount="25"
-              onClick={(category: string) => handleCategory(category)}
+              onClick={(category: number) => handleCategory(category)}
             />
             <Input
               numAmount={50}
               amount="50"
-              onClick={(category: string) => handleCategory(category)}
+              onClick={(category: number) => handleCategory(category)}
             />
             <Input
               numAmount={100}
               amount="100"
-              onClick={(category: string) => handleCategory(category)}
+              onClick={(category: number) => handleCategory(category)}
             />
 
             <p className="mt-5 text-sm font-poppins">

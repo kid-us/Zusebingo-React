@@ -95,7 +95,6 @@ const Login = () => {
                   name="username"
                   className={`focus:outline-none chakra px-3 h-full placeholder:text-gray-400 text-md w-full`}
                   placeholder="Username"
-                  value="Jamescog"
                 />
               </div>
             </div>
@@ -117,7 +116,6 @@ const Login = () => {
                   name="password"
                   className={`focus:outline-none chakra px-3 h-full placeholder:text-gray-400 text-md w-full`}
                   placeholder="Password"
-                  value={"00000000"}
                 />
               </div>
               <div

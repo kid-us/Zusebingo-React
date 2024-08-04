@@ -68,18 +68,18 @@ const CardPicker = () => {
         localStorage.setItem("card", num.toString());
         navigate("/play");
       } else {
-        if (response[1] === 1) {
+        if (response.length === 1) {
           setError(true);
           setErrorMsg(
-            "Number already taken by another player, choose different one."
+            "Your chosen number is already taken by another player. Please choose a different one."
           );
-        } else if (response[1] === 2) {
+        } else if (response.length === 2) {
           setError(true);
           setErrorMsg("You already exist in this game.");
-        } else {
+        } else if (response.length === 2) {
           setError(true);
           setErrorMsg(
-            "Your balance is low. Trying to cheat will make ur account banned."
+            "Your balance is low. Attempting to cheat will result in your account being banned."
           );
         }
       }
@@ -89,9 +89,11 @@ const CardPicker = () => {
   return (
     <>
       {error && (
-        <div className="fixed top-20 right-1 bg-red-500 rounded text-white p-2 lg:w-[20%] w-full shadow-md shadow-zinc-900">
+        <div className="fixed top-20 right-1 bg-red-500 rounded text-white p-2 lg:w-[30%] w-[98%] shadow-md shadow-zinc-900">
           <div className="relative">
-            <p className="font-poppins text-sm">{errorMsg}</p>
+            <p className="font-poppins text-sm lg:pe-0 ps-2 pe-10">
+              {errorMsg}
+            </p>
             <button
               onClick={() => setError(false)}
               className="absolute bi-x-lg top-0 right-0"

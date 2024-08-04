@@ -13,7 +13,7 @@ const Home = () => {
   const [balanceError, setBalanceError] = useState(false);
 
   // Handle Category
-  const handleCategory = (category: string) => {
+  const handleCategory = (category: number) => {
     if (wallet) {
       if (wallet < Number(category)) {
         setBalanceError(true);
@@ -46,7 +46,7 @@ const Home = () => {
           </div>
 
           {balanceError && (
-            <div className="flex justify-between bg-red-600 rounded py-1 my-5">
+            <div className="flex justify-between bg-red-600 rounded py-1 mt-5">
               <p className=" animate__animated animate__fadeIn text-gray-100 ps-5 text-sm">
                 Your balance is too Low! Deposit and Play
               </p>
@@ -65,22 +65,22 @@ const Home = () => {
             <Input
               numAmount={10}
               amount="ten"
-              onClick={(category: string) => handleCategory(category)}
+              onClick={(category: number) => handleCategory(category)}
             />
             <Input
               numAmount={25}
               amount="twenty-five"
-              onClick={(category: string) => handleCategory(category)}
+              onClick={(category: number) => handleCategory(category)}
             />
             <Input
               numAmount={50}
               amount="fifty"
-              onClick={(category: string) => handleCategory(category)}
+              onClick={(category: number) => handleCategory(category)}
             />
             <Input
               numAmount={100}
               amount="hundred"
-              onClick={(category: string) => handleCategory(category)}
+              onClick={(category: number) => handleCategory(category)}
             />
 
             {can_create_group_game && (

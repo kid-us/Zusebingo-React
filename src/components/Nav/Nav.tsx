@@ -12,7 +12,7 @@ import { UserProps } from "../Protected/Protected";
 const Nav = () => {
   const { username, wallet, login } = useAuth();
   const [menu, setMenu] = useState(false);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     axios
@@ -27,8 +27,8 @@ const Nav = () => {
         }
       )
       .then((response) => {
-        console.log(loading);
-        setLoading(true);
+        // console.log(loading);
+        // setLoading(true);
         login(
           response.data.id,
           response.data.wallet,
@@ -40,7 +40,7 @@ const Nav = () => {
         );
       })
       .catch((error) => {
-        setLoading(false);
+        // setLoading(false);
         console.log(error);
       });
   }, []);

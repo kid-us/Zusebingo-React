@@ -1,13 +1,13 @@
 interface Props {
   numAmount: number;
   amount: string;
-  onClick: (category: string) => void;
+  onClick: (category: number) => void;
 }
 
 export const Input = ({ amount, numAmount, onClick }: Props) => {
   return (
     <div
-      onClick={() => onClick(amount)}
+      onClick={() => onClick(numAmount)}
       className="cursor-pointer bg-white rounded-md lg:mb-5 mb-4 grid grid-cols-10 py-3 shadow shadow-zinc-900"
     >
       <div className="col-span-1">

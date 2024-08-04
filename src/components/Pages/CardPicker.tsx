@@ -21,9 +21,18 @@ const CardPicker = () => {
     });
 
     // Enter Room
-    let room = { room: category };
+    let room = { room: category, user_id: 434 };
+
     socket.emit("enter_room", room, (response: any) => {
       setSelectedNumbers(response);
+    });
+
+    // Enter Another Room
+    socket.on("room_full", () => {
+      console.log("Room Full");
+      socket.emit("enter_room", room, (response: any) => {
+        setSelectedNumbers(response);
+      });
     });
 
     // Card Taken

@@ -1,5 +1,4 @@
 import { io } from "socket.io-client";
 
-const socket = io("ws://4.tcp.eu.ngrok.io:18831");
-
+const socket = io("ws://2.tcp.eu.ngrok.io:13802");
 export default socket;

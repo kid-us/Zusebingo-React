@@ -18,6 +18,7 @@ export interface BingoBoard {
 
 const Game2 = () => {
   const startSeconds = localStorage.getItem("startSecond");
+  const category = localStorage.getItem("room");
   const cardNo = localStorage.getItem("card");
   let num;
   if (startSeconds) {
@@ -61,6 +62,7 @@ const Game2 = () => {
       const interval = setInterval(() => {
         if (typeof seconds === "number") {
           setSeconds((prevSeconds) => prevSeconds - 1);
+          localStorage.setItem("startSecond", (seconds - 1).toString());
         }
       }, 1000);
       return () => clearInterval(interval);
@@ -69,6 +71,19 @@ const Game2 = () => {
 
   // Sockets
   useEffect(() => {
+    let room = { room: category, user_id: 138 };
+
+    socket.emit("refresh", room, (response: any) => {
+      console.log("Refreshed");
+      if (response === false) {
+        setFalseWin(true);
+        localStorage.clear();
+        // setTimeout(() => {
+        //   window.location.href = "/";
+        // }, 2000);
+      }
+    });
+
     socket.on("payout", (response) => {
       setTotalPayout(response.payment);
     });
@@ -79,14 +94,14 @@ const Game2 = () => {
     });
 
     socket.on("game_over", (data: any) => {
-      console.log(data);
+      // Username goes here.
       if (data.winner !== "Yakobe") {
         setLoseMessage(true);
         setWinUser(data.winner);
         setWinnerPattern(data.patterns);
         setWinnerBoard(data.board);
       }
-      // localStorage.clear();
+      localStorage.clear();
     });
   }, [socket]);
 
@@ -100,8 +115,7 @@ const Game2 = () => {
     socket.emit("bingo", data, (response: any) => {
       console.log(response);
       response[0] === true ? setWinMessage(true) : setFalseWin(true);
-
-      // localStorage.clear();
+      localStorage.clear();
     });
   };
 
@@ -116,7 +130,7 @@ const Game2 = () => {
           payout={totalPayout}
         />
       )}
-      {falseWin && <FalseWin />}
+      {falseWin && <FalseWin message={true} />}
       {seconds > 0 && <Counter number={seconds} />}
 
       <div className="bg2 h-[100vh] px-1">

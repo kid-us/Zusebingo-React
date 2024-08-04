@@ -4,6 +4,8 @@ import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { baseUrl } from "../../services/apiClient";
 
 const schema = z.object({
   password: z.string().min(4, {
@@ -17,7 +19,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 const Login = () => {
-  // const [loginError, setLoginError] = useState(false);
+  const [loginError, setLoginError] = useState(false);
   const [passwordType, setPasswordType] = useState(true);
 
   const {
@@ -28,6 +30,25 @@ const Login = () => {
 
   const onSubmit = (data: FieldValues) => {
     console.log(data);
+
+    const logData = {
+      username: data.username,
+      password: data.password,
+    };
+
+    axios
+      .post(`${baseUrl}/api/v2/auth/login`, logData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoginError(true);
+      });
   };
   return (
     <div className="bg">
@@ -37,11 +58,11 @@ const Login = () => {
             <img src={logo} alt="Logo" className="w-28" />
           </div>
           <form className="mt-16" onSubmit={handleSubmit(onSubmit)}>
-            {/* {loginError && (
+            {loginError && (
               <p className="text-sm text-white mb-5 bg-red-700 rounded ps-2 py-2 text-center bi-heartbreak">
                 &nbsp; Invalid username and Password.
               </p>
-            )} */}
+            )}
             {/* Username */}
             <div className="bg-white rounded-md overflow-hidden lg:mb-4 mb-4 grid grid-cols-10 h-14 shadow shadow-zinc-900">
               <div className="col-span-1">
@@ -103,7 +124,7 @@ const Login = () => {
                 Login
               </button>
             </div>
-            <p className="mt-5 text-sm">
+            <p className="mt-5 text-sm font-poppins">
               Don't have an Account?{" "}
               <Link to="/register" className="text-white">
                 Register

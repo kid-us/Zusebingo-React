@@ -61,6 +61,7 @@ const Game2 = () => {
       const interval = setInterval(() => {
         if (typeof seconds === "number") {
           setSeconds((prevSeconds) => prevSeconds - 1);
+          localStorage.setItem("startSecond", (seconds - 1).toString());
         }
       }, 1000);
       return () => clearInterval(interval);
@@ -85,8 +86,8 @@ const Game2 = () => {
         setWinUser(data.winner);
         setWinnerPattern(data.patterns);
         setWinnerBoard(data.board);
+        localStorage.clear();
       }
-      // localStorage.clear();
     });
   }, [socket]);
 
@@ -100,7 +101,7 @@ const Game2 = () => {
     socket.emit("bingo", data, (response: any) => {
       console.log(response);
       response[0] === true ? setWinMessage(true) : setFalseWin(true);
-      // localStorage.clear();
+      localStorage.clear();
     });
   };
 

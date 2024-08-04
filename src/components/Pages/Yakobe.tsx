@@ -21,9 +21,18 @@ const Yakobe = () => {
     });
 
     // Enter Room
-    let room = { room: category };
+    let room = { room: category, user_id: 138 };
+
     socket.emit("enter_room", room, (response: any) => {
       setSelectedNumbers(response);
+    });
+
+    // Enter Another Room
+    socket.on("room_full", () => {
+      console.log("Room Full");
+      socket.emit("enter_room", room, (response: any) => {
+        setSelectedNumbers(response);
+      });
     });
 
     // Card Taken
@@ -47,6 +56,7 @@ const Yakobe = () => {
       console.log(response);
       if (response[0] === true) {
         localStorage.setItem("startSecond", response[2]);
+        localStorage.setItem("room", "ten");
 
         const board = JSON.stringify(response[3]);
         localStorage.setItem("board", board);

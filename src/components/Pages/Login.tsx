@@ -71,7 +71,7 @@ const Login = () => {
       });
   };
   return (
-    <div className="bg lg:h-[100vh]">
+    <div className="bg fixed lg:h-[100vh]">
       <div className="container mx-auto flex justify-center align-middle h-auto pt-24">
         <div className="lg:w-[38%] lg:px-2 px-5">
           <div className="flex justify-center">

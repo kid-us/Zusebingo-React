@@ -71,7 +71,7 @@ const Login = () => {
       });
   };
   return (
-    <div className="bg">
+    <div className="bg lg:h-[100vh]">
       <div className="container mx-auto flex justify-center align-middle h-auto pt-24">
         <div className="lg:w-[38%] lg:px-2 px-5">
           <div className="flex justify-center">
@@ -125,7 +125,7 @@ const Login = () => {
                 <p
                   className={` ${
                     passwordType ? "bi-eye-fill" : "bi-eye-slash-fill"
-                  } text-xl pt-1 ps-3 text-red-500`}
+                  } text-xl pt-1 lg:ps-3 ps-2 text-red-500`}
                 ></p>
               </div>
             </div>

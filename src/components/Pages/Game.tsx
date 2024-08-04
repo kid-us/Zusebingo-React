@@ -121,7 +121,7 @@ const Game2 = () => {
       {falseWin && <FalseWin />}
       {seconds > 0 && <Counter number={seconds} />}
 
-      <div className="bg2 h-[100vh] px-1">
+      <div className="bg2 h-[100vh] lg:px-2 px-3">
         <div className="container mx-auto">
           <div className="flex lg:justify-center md:justify-center justify-start lg:ms-0 md:ms-0 ms-3">
             <CallOut calledNumber={caller} totalCall={calledNumbers} />

@@ -12,7 +12,7 @@ const CreateGroup = () => {
     <div className="bg">
       <Nav />
       <div className="container mx-auto flex justify-center align-middle h-auto pt-24">
-        <div className="lg:w-[38%] px-2">
+        <div className="lg:w-[38%] lg:px-2 px-4">
           <p className="lg:mt-5 text-2xl font-poppins">
             Choose the group entry amount.
           </p>

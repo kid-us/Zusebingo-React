@@ -2,37 +2,53 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { baseUrl } from "../../services/apiClient";
+import useAuth from "../../store/useAuth";
 
 interface ProtectedProps {
   children: React.ReactNode;
 }
 
+export interface UserProps {
+  id: number;
+  username: string;
+  wallet: number;
+  can_create_group_game: boolean;
+  social_media_link: string;
+  phone_number: string;
+  referral_code: string;
+}
+
 const Protected = ({ children }: ProtectedProps) => {
-  const token = localStorage.getItem("token");
   const navigate = useNavigate();
 
-  //   const { login } = useAuthStore();
+  const { login } = useAuth();
 
   useEffect(() => {
-    if (token) {
-      axios
-        .get(`${baseUrl}/auth/getUserInfo`, {
+    axios
+      .post<UserProps>(
+        `${baseUrl}/api/v2/auth/me`,
+        {},
+        {
           headers: {
             "Content-Type": "application/json",
-            "x-auth-token": token,
           },
-        })
-        .then((response) => {
-          console.log(response);
-
-          //   login();
-        })
-        .catch(() => {
-          navigate("/login");
-        });
-    } else {
-      navigate("/login");
-    }
+          withCredentials: true,
+        }
+      )
+      .then((response) => {
+        login(
+          response.data.id,
+          response.data.wallet,
+          response.data.username,
+          response.data.phone_number,
+          response.data.referral_code,
+          response.data.social_media_link,
+          response.data.can_create_group_game
+        );
+      })
+      .catch(() => {
+        navigate("/login");
+      });
   }, []);
 
   return children;

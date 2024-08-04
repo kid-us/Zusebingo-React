@@ -3,7 +3,7 @@ import z from "zod";
 import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { baseUrl } from "../../services/apiClient";
 
@@ -19,6 +19,8 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const [loginError, setLoginError] = useState(false);
   const [passwordType, setPasswordType] = useState(true);
 
@@ -29,8 +31,6 @@ const Login = () => {
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const onSubmit = (data: FieldValues) => {
-    console.log(data);
-
     const logData = {
       username: data.username,
       password: data.password,
@@ -41,9 +41,26 @@ const Login = () => {
         headers: {
           "Content-Type": "application/json",
         },
+        withCredentials: true,
       })
-      .then((response) => {
-        console.log(response);
+      .then(() => {
+        axios
+          .post(
+            `${baseUrl}/api/v2/auth/me`,
+            {},
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+              withCredentials: true,
+            }
+          )
+          .then(() => {
+            navigate("/");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       })
       .catch((error) => {
         console.log(error);
@@ -59,7 +76,7 @@ const Login = () => {
           </div>
           <form className="mt-16" onSubmit={handleSubmit(onSubmit)}>
             {loginError && (
-              <p className="text-sm text-white mb-5 bg-red-700 rounded ps-2 py-2 text-center bi-heartbreak">
+              <p className="text-sm text-white mb-5 bg-red-700 rounded ps-2 py-2 text-center bi-heartbreak font-poppins">
                 &nbsp; Invalid username and Password.
               </p>
             )}
@@ -68,13 +85,14 @@ const Login = () => {
               <div className="col-span-1">
                 <p className="bi-person-fill text-2xl ps-6 pt-3 text-red-500"></p>
               </div>
-              <div className="col-span-9 lg:ps-3 ms-5 border-l">
+              <div className="col-span-9 ms-5 border-l">
                 <input
                   {...register("username")}
                   type="text"
                   name="username"
-                  className={`focus:outline-none chakra lg:ps-0 ps-3 h-full placeholder:text-gray-400 text-md w-full pe-3`}
+                  className={`focus:outline-none chakra px-3 h-full placeholder:text-gray-400 text-md w-full`}
                   placeholder="Username"
+                  value="Jamescog"
                 />
               </div>
             </div>
@@ -89,13 +107,14 @@ const Login = () => {
               <div className="col-span-1">
                 <p className="bi-lock-fill text-2xl ps-6 pt-3 text-red-500"></p>
               </div>
-              <div className="col-span-8 lg:ps-3 ms-5 border-l border-r">
+              <div className="col-span-8 ms-5 border-l border-r">
                 <input
                   {...register("password")}
                   type={!passwordType ? "text" : "password"}
                   name="password"
-                  className={`focus:outline-none chakra lg:ps-0 ps-3 h-full placeholder:text-gray-400 text-md w-full pe-3`}
+                  className={`focus:outline-none chakra px-3 h-full placeholder:text-gray-400 text-md w-full`}
                   placeholder="Password"
+                  value={"00000000"}
                 />
               </div>
               <div
@@ -105,7 +124,7 @@ const Login = () => {
                 <p
                   className={` ${
                     passwordType ? "bi-eye-fill" : "bi-eye-slash-fill"
-                  } text-2xl pt-1 ps-2 text-red-500`}
+                  } text-xl pt-1 ps-3 text-red-500`}
                 ></p>
               </div>
             </div>

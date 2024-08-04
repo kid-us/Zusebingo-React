@@ -2,8 +2,11 @@ import Nav from "../Nav/Nav";
 import { Input } from "../BetInputs/Input";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import useAuth from "../../store/useAuth";
 
 const Home = () => {
+  const { can_create_group_game, wallet } = useAuth();
+
   const navigate = useNavigate();
 
   // Balance Error
@@ -11,11 +14,12 @@ const Home = () => {
 
   // Handle Category
   const handleCategory = (category: string) => {
-    let balance = 20;
-    if (balance < Number(category)) {
-      setBalanceError(true);
-    } else {
-      navigate(`/card-picker?category=${category}`);
+    if (wallet) {
+      if (wallet < Number(category)) {
+        setBalanceError(true);
+      } else {
+        navigate(`/card-picker?category=${category}`);
+      }
     }
   };
 
@@ -79,23 +83,20 @@ const Home = () => {
               onClick={(category: string) => handleCategory(category)}
             />
 
-            <div className="mt-8 text-center">
-              <Link to={"/create-group"}>
-                <p className="py-3 text-black btn-bg w-full rounded font-poppins text-lg shadow shadow-zinc-950 chakra">
-                  Create Group Game
-                </p>
-              </Link>
-            </div>
+            {can_create_group_game && (
+              <div className="mt-8 text-center">
+                <Link to={"/create-group"}>
+                  <p className="py-3 text-black btn-bg w-full rounded font-poppins text-lg shadow shadow-zinc-950 chakra">
+                    Create Group Game
+                  </p>
+                </Link>
+              </div>
+            )}
 
             <p className="mt-5 text-sm font-poppins">
               Please reach out to our{" "}
-              <Link
-                to={"/play"}
-                // to="https://t.me/+UGpMJ8GPTVw2MGUx"
-
-                className="text-white"
-              >
-                Telegramss
+              <Link to="https://t.me/+UGpMJ8GPTVw2MGUx" className="text-white">
+                Telegram
               </Link>{" "}
               customer support for assistance.
             </p>

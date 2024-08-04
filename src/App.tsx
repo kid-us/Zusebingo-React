@@ -17,11 +17,19 @@ import CreateGroup from "./components/Pages/CreateGroup";
 import Yakobe from "./components/Pages/Yakobe";
 import Game from "./components/Pages/Game";
 import Game2 from "./components/Pages/Game2";
+import Protected from "./components/Protected/Protected";
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route
+        path="/"
+        element={
+          <Protected>
+            <Home />
+          </Protected>
+        }
+      />
       <Route path="/card-picker" element={<CardPicker />} />
       <Route path="/create-group" element={<CreateGroup />} />
       <Route path="/setting" element={<Setting />} />

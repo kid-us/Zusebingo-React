@@ -1,11 +1,49 @@
 // import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "animate.css";
 import { logo } from "../../assets";
 import Menu from "./Menu";
 import { Link } from "react-router-dom";
+import useAuth from "../../store/useAuth";
+import axios from "axios";
+import { baseUrl } from "../../services/apiClient";
+import { UserProps } from "../Protected/Protected";
+
 const Nav = () => {
+  const { username, wallet, login } = useAuth();
   const [menu, setMenu] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    axios
+      .post<UserProps>(
+        `${baseUrl}/api/v2/auth/me`,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      )
+      .then((response) => {
+        console.log(loading);
+        setLoading(true);
+        login(
+          response.data.id,
+          response.data.wallet,
+          response.data.username,
+          response.data.phone_number,
+          response.data.referral_code,
+          response.data.social_media_link,
+          response.data.can_create_group_game
+        );
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+      });
+  }, []);
 
   return (
     <>
@@ -21,7 +59,7 @@ const Nav = () => {
               <div className="flex">
                 <p className="bi-cash text-xl me-2"></p>
                 <p className="text-lg chakra">
-                  Balance <span className="text-white chakra">200</span>
+                  Balance <span className="text-white chakra">{wallet}</span>
                 </p>
               </div>
               <div
@@ -29,7 +67,9 @@ const Nav = () => {
                 className="flex cursor-pointer"
               >
                 <p className="bi-person-fill text-xl me-2"></p>
-                <p className="text-white text-lg chakra uppercase">Ethan</p>
+                <p className="text-white text-lg chakra uppercase">
+                  {username}
+                </p>
               </div>
             </div>
             {/* Small device */}

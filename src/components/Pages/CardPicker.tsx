@@ -3,9 +3,13 @@ import Nav from "../Nav/Nav";
 import { useEffect, useState } from "react";
 import socket from "../../services/socket";
 import { useLocation, useNavigate } from "react-router-dom";
+import useAuth from "../../store/useAuth";
 
 const CardPicker = () => {
+  const { id, username } = useAuth();
+
   const navigate = useNavigate();
+
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const category = searchParams.get("category");
@@ -21,7 +25,7 @@ const CardPicker = () => {
     });
 
     // Enter Room
-    let room = { room: category, user_id: 434 };
+    let room = { room: category, user_id: id };
 
     socket.emit("enter_room", room, (response: any) => {
       setSelectedNumbers(response);
@@ -46,8 +50,8 @@ const CardPicker = () => {
   // Handle Number selecting
   const handleSelectedNumber = (num: number): void => {
     const data = {
-      username: "Kidus",
-      user_id: 434,
+      username: username,
+      user_id: id,
       cards: [num],
       room: "ten",
     };

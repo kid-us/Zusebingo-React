@@ -6,6 +6,7 @@ import socket from "../../services/socket";
 import Win from "../Modal/Win";
 import Lose from "../Modal/Lose";
 import FalseWin from "../Modal/FalseWin";
+import useAuth from "../../store/useAuth";
 // import Bingo75 from "../Game/Bingo75";
 
 export interface BingoBoard {
@@ -17,6 +18,8 @@ export interface BingoBoard {
 }
 
 const Game2 = () => {
+  const { id, username } = useAuth();
+
   const startSeconds = localStorage.getItem("startSecond");
   const cardNo = localStorage.getItem("card");
   let num;
@@ -81,7 +84,7 @@ const Game2 = () => {
 
     socket.on("game_over", (data: any) => {
       console.log(data);
-      if (data.winner !== "Kidus") {
+      if (data.winner !== username) {
         setLoseMessage(true);
         setWinUser(data.winner);
         setWinnerPattern(data.patterns);
@@ -95,7 +98,7 @@ const Game2 = () => {
   const handleBingo = () => {
     const data = {
       card: cardNo,
-      user_id: 434,
+      user_id: id,
     };
 
     socket.emit("bingo", data, (response: any) => {

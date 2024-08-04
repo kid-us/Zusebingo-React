@@ -14,9 +14,7 @@ import LeaderBoard from "./components/Pages/LeaderBoard";
 import License from "./components/Pages/License";
 import Groups from "./components/Pages/Groups";
 import CreateGroup from "./components/Pages/CreateGroup";
-import Yakobe from "./components/Pages/Yakobe";
 import Game from "./components/Pages/Game";
-import Game2 from "./components/Pages/Game2";
 import Protected from "./components/Protected/Protected";
 
 function App() {
@@ -30,18 +28,80 @@ function App() {
           </Protected>
         }
       />
-      <Route path="/card-picker" element={<CardPicker />} />
-      <Route path="/create-group" element={<CreateGroup />} />
-      <Route path="/setting" element={<Setting />} />
-      <Route path="/history" element={<History />} />
-      <Route path="/balance" element={<Balance />} />
-      <Route path="/leaderboard" element={<LeaderBoard />} />
-      <Route path="/groups" element={<Groups />} />
-      <Route path="/license" element={<License />} />
-      <Route path="/play" element={<Game />}></Route>
-      <Route path="/play2" element={<Game2 />}></Route>
-      <Route path="/yakobe" element={<Yakobe />} />
+      <Route
+        path="/card-picker"
+        element={
+          <Protected>
+            <CardPicker />
+          </Protected>
+        }
+      />
 
+      <Route
+        path="/create-group"
+        element={
+          <Protected>
+            <CreateGroup />
+          </Protected>
+        }
+      />
+      <Route
+        path="/setting"
+        element={
+          <Protected>
+            <Setting />
+          </Protected>
+        }
+      />
+      <Route
+        path="/history"
+        element={
+          <Protected>
+            <History />
+          </Protected>
+        }
+      />
+      <Route
+        path="/balance"
+        element={
+          <Protected>
+            <Balance />
+          </Protected>
+        }
+      />
+      <Route
+        path="/leaderboard"
+        element={
+          <Protected>
+            <LeaderBoard />
+          </Protected>
+        }
+      />
+      <Route
+        path="/groups"
+        element={
+          <Protected>
+            <Groups />
+          </Protected>
+        }
+      />
+      <Route
+        path="/license"
+        element={
+          <Protected>
+            <License />
+          </Protected>
+        }
+      />
+
+      <Route
+        path="/play"
+        element={
+          <Protected>
+            <Game />
+          </Protected>
+        }
+      ></Route>
       {/* Not Protected */}
 
       <Route path="/login" element={<Login />} />

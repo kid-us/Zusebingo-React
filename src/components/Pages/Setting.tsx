@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Nav from "../Nav/Nav";
 import z from "zod";
 import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import useAuth from "../../store/useAuth";
 
 // import { useNavigate } from "react-router-dom";
 
@@ -19,8 +20,18 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 const Setting = () => {
-  // const navigate = useNavigate();
   const [passwordType, setPasswordType] = useState(true);
+
+  const { phone_number, username } = useAuth();
+  const [phone, setPhone] = useState<string>(phone_number || "");
+  const [userName, setUserName] = useState<string>(username || "");
+
+  useEffect(() => {
+    setPhone(phone_number || "");
+    setUserName(username || "");
+  }, [phone_number, username]);
+
+  // const navigate = useNavigate();
   // const [language, setLanguage] = useState()
 
   const {
@@ -33,21 +44,21 @@ const Setting = () => {
     console.log(data);
   };
 
-  const handleLanguage = (value: string) => {
-    console.log(value);
-  };
+  // const handleLanguage = (value: string) => {
+  //   console.log(value);
+  // };
 
   return (
     <div className="bg">
       <Nav />
       <div className="container mx-auto flex justify-center align-middle h-auto pt-24">
         <div className="lg:w-[38%] px-2">
-          <p className="lg:mt-5 lg:mb-4 text-2xl">
+          <p className="lg:mt-5 lg:mb-4 text-2xl font-poppins">
             Change on your account setting
           </p>
 
           {/* <!-- Language --> */}
-          <div className="flex justify-between my-10">
+          {/* <div className="flex justify-between my-10">
             <div className="flex bi-mic-fill text-white text-xl">
               <p className="text-black chakra ms-4">Change Sound</p>
             </div>
@@ -75,7 +86,7 @@ const Setting = () => {
                 ትግርኛ
               </option>
             </select>
-          </div>
+          </div> */}
 
           {/* <!-- Category Form --> */}
           <p className="text-white chakra">
@@ -87,17 +98,19 @@ const Setting = () => {
 
           <form className="pt-5" onSubmit={handleSubmit(onSubmit)}>
             {/* Username */}
-            <div className="bg-white rounded-md lg:mb-4 mb-4 grid grid-cols-10 py-3 shadow shadow-zinc-900">
+            <div className="bg-white rounded-md overflow-hidden lg:mb-4 mb-4 grid grid-cols-10 h-14 shadow shadow-zinc-900">
               <div className="col-span-1">
-                <p className="bi-person-fill text-2xl ps-4 pt-1 text-red-500"></p>
+                <p className="bi-person-fill text-xl ps-6 pt-4 text-red-500"></p>
               </div>
-              <div className="col-span-8 lg:ps-3 ms-5 border-l">
+              <div className="col-span-9 ms-5 border-l">
                 <input
                   {...register("username")}
                   type="text"
                   name="username"
-                  className={`focus:outline-none chakra pt-1 lg:ps-0 ps-3 placeholder:text-gray-400 text-lg w-full pe-3`}
+                  className={`focus:outline-none chakra pt-1 px-3 h-full placeholder:text-gray-400 text-lg w-full`}
                   placeholder="Username"
+                  value={userName}
+                  onChange={(e) => setUserName(e.currentTarget.value)}
                 />
               </div>
             </div>
@@ -107,17 +120,19 @@ const Setting = () => {
               </p>
             )}
             {/* Phone */}
-            <div className="bg-white rounded-md lg:mb-4 mb-4 grid grid-cols-10 py-3 shadow shadow-zinc-900">
+            <div className="bg-white rounded-md overflow-hidden lg:mb-4 mb-4 grid grid-cols-10 h-14 shadow shadow-zinc-900">
               <div className="col-span-1">
-                <p className="bi-telephone-fill text-2xl ps-4 pt-1 text-red-500"></p>
+                <p className="bi-telephone-fill text-xl ps-6 pt-4 text-red-500"></p>
               </div>
-              <div className="col-span-8 lg:ps-3 ms-5 border-l">
+              <div className="col-span-9  ms-5 border-l">
                 <input
                   {...register("phone")}
                   type="tel"
                   name="phone"
-                  className={`focus:outline-none chakra pt-1 lg:ps-0 ps-3 placeholder:text-gray-400 text-lg w-full pe-3`}
+                  className={`focus:outline-none chakra pt-1 px-3 h-full placeholder:text-gray-400 w-full`}
                   placeholder="Phone"
+                  value={phone}
+                  onChange={(e) => setPhone(e.currentTarget.value)}
                 />
               </div>
             </div>
@@ -127,16 +142,16 @@ const Setting = () => {
               </p>
             )}
             {/* Password */}
-            <div className="bg-white rounded-md lg:mb-4 mb-4 grid grid-cols-10 py-3 shadow shadow-zinc-900">
+            <div className="bg-white rounded-md overflow-hidden lg:mb-4 mb-4 grid grid-cols-10 h-14 shadow shadow-zinc-900">
               <div className="col-span-1">
-                <p className="bi-lock-fill text-2xl ps-4 pt-1 text-red-500"></p>
+                <p className="bi-lock-fill text-xl ps-6 pt-4 text-red-500"></p>
               </div>
-              <div className="col-span-8 lg:ps-3 ms-5 border-l border-r">
+              <div className="col-span-9 ms-5 border-l border-r">
                 <input
                   {...register("password")}
                   type={!passwordType ? "text" : "password"}
                   name="password"
-                  className={`focus:outline-none chakra pt-1 lg:ps-0 ps-3 placeholder:text-gray-400 text-lg w-full pe-3`}
+                  className={`focus:outline-none chakra pt-2 px-3 h-full placeholder:text-gray-400 text-lg w-full`}
                   placeholder="Password"
                 />
               </div>

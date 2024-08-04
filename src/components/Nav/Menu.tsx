@@ -1,5 +1,8 @@
 import { Link, useLocation } from "react-router-dom";
 import navMenu from "../../services/navMenu";
+import axios from "axios";
+import { baseUrl } from "../../services/apiClient";
+import useAuth from "../../store/useAuth";
 
 interface Props {
   username: string;
@@ -11,6 +14,28 @@ interface Props {
 const Menu = ({ menu, onMenu, balance, username }: Props) => {
   const location = useLocation();
   const path = location.pathname;
+
+  const { logout } = useAuth();
+
+  const handleLogout = () => {
+    axios
+      .post(
+        `${baseUrl}/api/v2/auth/logout`,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then(() => {
+        logout();
+        window.location.href = "/login";
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <>
@@ -49,7 +74,7 @@ const Menu = ({ menu, onMenu, balance, username }: Props) => {
             <p
               className={`lg:text-xl ${
                 menus.link == path && "text-white"
-              } text-2xl font-poppins `}
+              } text-2xl chakra `}
             >
               {menus.name}
             </p>
@@ -58,9 +83,12 @@ const Menu = ({ menu, onMenu, balance, username }: Props) => {
 
         <hr className="border[1px] border-zinc-950 " />
 
-        <div className="flex mt-8 cursor-pointer">
+        <div
+          onClick={() => handleLogout()}
+          className="flex mt-8 cursor-pointer"
+        >
           <p className={`bi-arrow-bar-right text-white text-2xl me-4`}></p>
-          <p className="text-2xl font-poppins">Logout</p>
+          <p className="lg:text-xl text-2xl chakra">Logout</p>
         </div>
         <div className="absolute bottom-24">
           <Link to="/license" className="chakra">

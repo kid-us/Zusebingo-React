@@ -135,7 +135,9 @@ const Login = () => {
             )}
 
             <p className="text-sm text-end text-white">
-              <Link to="/request">Forgot Password?</Link>
+              <Link to="/request" className="font-poppins">
+                Forgot Password?
+              </Link>
             </p>
 
             <div className="mt-8 text-center">

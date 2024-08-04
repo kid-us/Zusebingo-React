@@ -119,8 +119,7 @@ const Game2 = () => {
       setLoader(false);
       if (response[0] === true) {
         setWinMessage(true);
-      }
-      {
+      } else {
         setFalseWin(true);
         setTimeout(() => {
           window.location.href = "/";

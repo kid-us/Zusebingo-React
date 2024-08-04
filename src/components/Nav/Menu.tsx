@@ -2,11 +2,13 @@ import { Link, useLocation } from "react-router-dom";
 import navMenu from "../../services/navMenu";
 
 interface Props {
+  username: string;
+  balance: number;
   menu: boolean;
   onMenu: (val: boolean) => void;
 }
 
-const Menu = ({ menu, onMenu }: Props) => {
+const Menu = ({ menu, onMenu, balance, username }: Props) => {
   const location = useLocation();
   const path = location.pathname;
 
@@ -22,15 +24,15 @@ const Menu = ({ menu, onMenu }: Props) => {
       >
         <div className="lg:hidden flex justify-between py-7">
           <div>
-            <p className="uppercase chakra text-2xl">
+            <p className="uppercase chakra text-2xl text-white">
               <span className="bi-person-fill me-2"></span>
-              Ethan
+              {username}
             </p>
           </div>
           <div>
-            <p className="uppercase chakra text-2xl">
+            <p className="uppercase chakra text-2xl text-white">
               <span className="bi-cash me-2"></span>
-              200
+              {balance}
             </p>
           </div>
         </div>
@@ -47,7 +49,7 @@ const Menu = ({ menu, onMenu }: Props) => {
             <p
               className={`lg:text-xl ${
                 menus.link == path && "text-white"
-              } text-2xl chakra `}
+              } text-2xl font-poppins `}
             >
               {menus.name}
             </p>
@@ -58,13 +60,15 @@ const Menu = ({ menu, onMenu }: Props) => {
 
         <div className="flex mt-8 cursor-pointer">
           <p className={`bi-arrow-bar-right text-white text-2xl me-4`}></p>
-          <p className="text-xl chakra">Logout</p>
+          <p className="text-2xl font-poppins">Logout</p>
         </div>
         <div className="absolute bottom-24">
           <Link to="/license" className="chakra">
             License Agreement and Rules
           </Link>
-          <p className="mt-3 text-center text-white chakra">&copy; Zusebingo</p>
+          <p className="mt-3 lg:text-center text-white chakra">
+            &copy; Zusebingo
+          </p>
         </div>
       </div>
     </>

@@ -82,7 +82,14 @@ const Nav = () => {
         </div>
       </div>
       {/* Menu */}
-      {menu && <Menu menu={menu} onMenu={(val: boolean) => setMenu(val)} />}
+      {menu && (
+        <Menu
+          username={username ? username : ""}
+          balance={wallet ? wallet : 0}
+          menu={menu}
+          onMenu={(val: boolean) => setMenu(val)}
+        />
+      )}
     </>
   );
 };

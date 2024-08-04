@@ -28,11 +28,11 @@ const Home = () => {
       <Nav />
       <div className="container mx-auto flex justify-center align-middle h-auto pt-24">
         <div className="lg:w-[38%] px-2">
-          <p className="lg:mt-5 lg:mb-4 text-2xl font-poppins">
+          <p className="lg:mt-5 lg:mb-4 lg:text-2xl text-xl font-poppins">
             Choose Bet Category
           </p>
 
-          <p className="text-white chakra">
+          <p className="text-white chakra lg:text-md text-sm mt-2">
             <span className="bi-gift-fill text-red-700"></span> Rev up the Fun:
             Join Group Games & Score Big Wins!
           </p>

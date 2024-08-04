@@ -25,10 +25,10 @@ const CallOut = ({ calledNumber, totalCall }: Props) => {
     <div className="lg:ms-16 md:mx-10 mx-1">
       <p className="font-poppins mb-5 mt-2">
         Total Callout:{" "}
-        <span className="chakra text-lg text-white">{totalCall.length}</span>
+        <span className="chakra text-xl text-white">{totalCall.length}</span>
       </p>
       <div className="lg:grid md:grid flex md:grid-cols-7 lg:grid-cols-9 grid-cols-1">
-        <div className="col-span-1">
+        <div className="col-span-1 mt-2">
           <p className="bg-green-700 rounded-full font-poppins w-12 h-12 pt-3 text-center text-white font-bold">
             {calledNumber}
           </p>

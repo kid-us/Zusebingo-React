@@ -6,7 +6,6 @@ import socket from "../../services/socket";
 import Win from "../Modal/Win";
 import Lose from "../Modal/Lose";
 import FalseWin from "../Modal/FalseWin";
-import useAuth from "../../store/useAuth";
 // import Bingo75 from "../Game/Bingo75";
 
 export interface BingoBoard {
@@ -18,10 +17,8 @@ export interface BingoBoard {
 }
 
 const Game2 = () => {
-  const { id, username } = useAuth();
-  const [loader, setLoader] = useState<boolean>(false);
-
   const startSeconds = localStorage.getItem("startSecond");
+  const category = localStorage.getItem("room");
   const cardNo = localStorage.getItem("card");
   let num;
   if (startSeconds) {
@@ -47,13 +44,15 @@ const Game2 = () => {
     O: [],
   });
 
-  // Seconds and Bingo Board
+  //   Seconds and Bingo Board
   useEffect(() => {
     const fetchData = () => {
       const storedData = localStorage.getItem("board");
       if (storedData) {
         const data: BingoBoard = JSON.parse(storedData);
         setBoard(data);
+      } else {
+        console.error("No data found in local storage");
       }
     };
 
@@ -72,18 +71,18 @@ const Game2 = () => {
 
   // Sockets
   useEffect(() => {
-    if (id) {
-      let userId = { user_id: id };
-      socket.emit("refresh", userId, (response: any) => {
-        if (response === false) {
-          setFalseWin(true);
-          localStorage.clear();
-          setTimeout(() => {
-            window.location.href = "/";
-          }, 3000);
-        }
-      });
-    }
+    let room = { room: category, user_id: 138 };
+
+    socket.emit("refresh", room, (response: any) => {
+      console.log("Refreshed");
+      if (response === false) {
+        setFalseWin(true);
+        localStorage.clear();
+        // setTimeout(() => {
+        //   window.location.href = "/";
+        // }, 2000);
+      }
+    });
 
     socket.on("payout", (response) => {
       setTotalPayout(response.payment);
@@ -95,37 +94,27 @@ const Game2 = () => {
     });
 
     socket.on("game_over", (data: any) => {
-      if (username) {
-        if (data.winner !== username) {
-          setLoseMessage(true);
-          setWinUser(data.winner);
-          setWinnerPattern(data.patterns);
-          setWinnerBoard(data.board);
-          localStorage.clear();
-        }
+      // Username goes here.
+      if (data.winner !== "Yakobe") {
+        setLoseMessage(true);
+        setWinUser(data.winner);
+        setWinnerPattern(data.patterns);
+        setWinnerBoard(data.board);
       }
+      localStorage.clear();
     });
-  }, [socket, id, username]);
+  }, [socket]);
 
   // Handle Bingo
   const handleBingo = () => {
-    setLoader(true);
     const data = {
       card: cardNo,
-      user_id: id,
+      user_id: 138,
     };
 
     socket.emit("bingo", data, (response: any) => {
-      setLoader(false);
-      if (response[0] === true) {
-        setWinMessage(true);
-      }
-      {
-        setFalseWin(true);
-        setTimeout(() => {
-          window.location.href = "/";
-        }, 3000);
-      }
+      console.log(response);
+      response[0] === true ? setWinMessage(true) : setFalseWin(true);
       localStorage.clear();
     });
   };
@@ -141,10 +130,12 @@ const Game2 = () => {
           payout={totalPayout}
         />
       )}
-      {falseWin && <FalseWin />}
+      {falseWin && <FalseWin message={true} />}
       {seconds > 0 && <Counter number={seconds} />}
 
-      <div className="bg2 h-[100vh] lg:px-2 px-3">
+      <div className="bg2 h-[100vh] px-1">
+        <button onClick={() => localStorage.clear()}>clear</button>
+
         <div className="container mx-auto">
           <div className="flex lg:justify-center md:justify-center justify-start lg:ms-0 md:ms-0 ms-3">
             <CallOut calledNumber={caller} totalCall={calledNumbers} />
@@ -224,13 +215,13 @@ const Game2 = () => {
               </div>
               {/* Infos */}
               <div className="flex justify-between">
-                <p className="text-white font-poppins mt-3 ps-2 text-xl">
+                <p className="text-white font-poppins mt-3 ps-2">
                   Payout{" "}
                   <span className="text-black font-bold font-poppins">
                     {totalPayout}br
                   </span>
                 </p>
-                <p className="text-white font-poppins mt-3 pe-2 text-xl">
+                <p className="text-white font-poppins mt-3 pe-2">
                   Board{" "}
                   <span className="text-black font-bold font-poppins">
                     #{cardNo}
@@ -239,18 +230,12 @@ const Game2 = () => {
               </div>
               {/* Bingo Button */}
               <div className="mt-8 text-center px-2">
-                {loader ? (
-                  <p className="py-3 text-black btn-bg w-full rounded flex justify-center font-poppins text-lg shadow shadow-zinc-950 chakra">
-                    <span className="loader rounded"></span>
-                  </p>
-                ) : (
-                  <button
-                    onClick={() => handleBingo()}
-                    className="py-4 text-black btn-bg w-full rounded font-poppins text-lg shadow-lg shadow-zinc-950 chakra active:shadow-none"
-                  >
-                    Bingo
-                  </button>
-                )}
+                <button
+                  onClick={() => handleBingo()}
+                  className="py-3 text-black btn-bg w-full rounded font-poppins text-lg shadow shadow-zinc-950 chakra"
+                >
+                  Bingo
+                </button>
               </div>
             </div>
           </div>

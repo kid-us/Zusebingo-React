@@ -40,8 +40,10 @@ const CallOut = ({ calledNumber, totalCall }: Props) => {
                 <p
                   key={index}
                   className={`${
-                    typeof num === "string" ? "text-xs pt-2" : "text-md"
-                  } bg-white lg:w-7 lg:h-6 md:w-7 md:h-6 w-9 h-7 pt-[2px] text-center rounded font-poppins shadow shadow-zinc-700`}
+                    typeof num === "string"
+                      ? "text-xs pt-2 bg-red-700 text-white"
+                      : "text-md pt-[3px] bg-white"
+                  } lg:w-8 lg:h-8 md:w-8 md:h-8 w-9 h-9 text-center rounded font-poppins`}
                 >
                   {num}
                 </p>
@@ -54,8 +56,10 @@ const CallOut = ({ calledNumber, totalCall }: Props) => {
                 <p
                   key={index + 8}
                   className={`${
-                    typeof num === "string" ? "text-xs pt-2" : "text-md"
-                  } bg-white lg:w-7 lg:h-6 md:w-7 md:h-6 w-9 h-7 pt-[2px] text-center rounded font-poppins shadow shadow-zinc-700`}
+                    typeof num === "string"
+                      ? "text-xs pt-2 bg-red-700 text-white"
+                      : "text-md pt-[3px] bg-white"
+                  } lg:w-8 lg:h-8 md:w-8 md:h-8 w-9 h-9 text-center rounded font-poppins`}
                 >
                   {num}
                 </p>

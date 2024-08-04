@@ -13,12 +13,12 @@ const Home = () => {
   const [balanceError, setBalanceError] = useState(false);
 
   // Handle Category
-  const handleCategory = (category: number) => {
+  const handleCategory = (numCategory: number, stringCategory: string) => {
     if (wallet) {
-      if (wallet < Number(category)) {
+      if (wallet < Number(numCategory)) {
         setBalanceError(true);
       } else {
-        navigate(`/card-picker?category=${category}`);
+        navigate(`/card-picker?category=${stringCategory}`);
       }
     }
   };
@@ -65,22 +65,30 @@ const Home = () => {
             <Input
               numAmount={10}
               amount="ten"
-              onClick={(category: number) => handleCategory(category)}
+              onClick={(numCategory: number, stringCategory: string) =>
+                handleCategory(numCategory, stringCategory)
+              }
             />
             <Input
               numAmount={25}
               amount="twenty-five"
-              onClick={(category: number) => handleCategory(category)}
+              onClick={(numCategory: number, stringCategory: string) =>
+                handleCategory(numCategory, stringCategory)
+              }
             />
             <Input
               numAmount={50}
               amount="fifty"
-              onClick={(category: number) => handleCategory(category)}
+              onClick={(numCategory: number, stringCategory: string) =>
+                handleCategory(numCategory, stringCategory)
+              }
             />
             <Input
               numAmount={100}
               amount="hundred"
-              onClick={(category: number) => handleCategory(category)}
+              onClick={(numCategory: number, stringCategory: string) =>
+                handleCategory(numCategory, stringCategory)
+              }
             />
 
             {can_create_group_game && (

@@ -21,6 +21,8 @@ const CardPicker = () => {
   const [error, setError] = useState<boolean>(false);
   const [errorMsg, setErrorMsg] = useState<string>("");
 
+  // 1: Card already exist  2 : Already games exist, 3 : Balance
+
   useEffect(() => {
     // Connect
     socket.on("connect", () => {
@@ -29,14 +31,12 @@ const CardPicker = () => {
 
     // Enter Room
     let room = { room: category, user_id: id };
-
     socket.emit("enter_room", room, (response: any) => {
       setSelectedNumbers(response);
     });
 
     // Enter Another Room
     socket.on("room_full", () => {
-      console.log("Room Full");
       socket.emit("enter_room", room, (response: any) => {
         setSelectedNumbers(response);
       });
@@ -48,15 +48,13 @@ const CardPicker = () => {
     });
   }, [socket]);
 
-  // 1: Card already exist  2 : Already games exist, 3 : Balance
-
   // Handle Number selecting
   const handleSelectedNumber = (num: number): void => {
     const data = {
       username: username,
       user_id: id,
       cards: [num],
-      room: "ten",
+      room: category,
     };
 
     socket.emit("join_game", data, (response: any) => {
@@ -65,6 +63,7 @@ const CardPicker = () => {
         localStorage.setItem("board", board);
         localStorage.setItem("startSecond", response[2]);
         localStorage.setItem("card", num.toString());
+
         navigate("/play");
       } else {
         if (response.length === 1) {

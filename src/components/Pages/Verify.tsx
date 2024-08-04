@@ -4,6 +4,7 @@ import { logo } from "../../assets";
 const Verify: React.FC = () => {
   const [code, setCode] = useState<string[]>(["", "", "", "", ""]);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const [loader, setLoader] = useState<boolean>(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>, index: number) => {
     const value = e.target.value;
@@ -21,6 +22,7 @@ const Verify: React.FC = () => {
     e.preventDefault();
     const verificationCode = code.join("");
     console.log(verificationCode);
+    setLoader(true);
     // Implement verification logic here
   };
 
@@ -56,11 +58,16 @@ const Verify: React.FC = () => {
             </div>
 
             <div className="mt-10 text-center">
-              {allInputsFilled && (
-                <button className="py-3 text-black btn-bg w-full rounded font-poppins text-lg shadow shadow-zinc-950 chakra">
-                  Verify
-                </button>
-              )}
+              {allInputsFilled &&
+                (loader ? (
+                  <p className="py-3 text-black btn-bg w-full rounded flex justify-center font-poppins text-lg shadow shadow-zinc-950 chakra">
+                    <span className="loader rounded"></span>
+                  </p>
+                ) : (
+                  <button className="py-3 text-black btn-bg w-full rounded font-poppins text-lg shadow shadow-zinc-950 chakra">
+                    Verify
+                  </button>
+                ))}
             </div>
           </form>
         </div>

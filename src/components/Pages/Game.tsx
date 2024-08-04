@@ -19,6 +19,7 @@ export interface BingoBoard {
 
 const Game2 = () => {
   const { id, username } = useAuth();
+  const [loader, setLoader] = useState<boolean>(false);
 
   const startSeconds = localStorage.getItem("startSecond");
   const cardNo = localStorage.getItem("card");
@@ -81,7 +82,6 @@ const Game2 = () => {
     });
 
     socket.on("game_over", (data: any) => {
-      console.log(data);
       if (data.winner !== username) {
         setLoseMessage(true);
         setWinUser(data.winner);
@@ -94,13 +94,14 @@ const Game2 = () => {
 
   // Handle Bingo
   const handleBingo = () => {
+    setLoader(true);
     const data = {
       card: cardNo,
       user_id: id,
     };
 
     socket.emit("bingo", data, (response: any) => {
-      console.log(response);
+      setLoader(false);
       response[0] === true ? setWinMessage(true) : setFalseWin(true);
       localStorage.clear();
     });
@@ -217,12 +218,18 @@ const Game2 = () => {
               </div>
               {/* Bingo Button */}
               <div className="mt-8 text-center px-2">
-                <button
-                  onClick={() => handleBingo()}
-                  className="py-3 text-black btn-bg w-full rounded font-poppins text-lg shadow shadow-zinc-950 chakra"
-                >
-                  Bingo
-                </button>
+                {loader ? (
+                  <p className="py-3 text-black btn-bg w-full rounded flex justify-center font-poppins text-lg shadow shadow-zinc-950 chakra">
+                    <span className="loader rounded"></span>
+                  </p>
+                ) : (
+                  <button
+                    onClick={() => handleBingo()}
+                    className="py-3 text-black btn-bg w-full rounded font-poppins text-lg shadow shadow-zinc-950 chakra"
+                  >
+                    Bingo
+                  </button>
+                )}
               </div>
             </div>
           </div>

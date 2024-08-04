@@ -23,6 +23,7 @@ type FormData = z.infer<typeof schema>;
 
 const Withdraw = () => {
   const [bank, setBank] = useState<Bank[]>([]);
+  const [loader, setLoader] = useState<boolean>(false);
   useEffect(() => {
     axios
       .get("https://api.zusebingo.com/api/v1/payments/banks", {
@@ -45,8 +46,10 @@ const Withdraw = () => {
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const onSubmit = (data: FieldValues) => {
+    setLoader(true);
     console.log(data);
   };
+
   return (
     <div className="mt-10">
       <p className="chakra">Withdraw your Money</p>
@@ -137,9 +140,15 @@ const Withdraw = () => {
         </div>
 
         <div className="mt-8 text-center">
-          <button className="py-3 text-black btn-bg w-full rounded font-poppins text-lg shadow shadow-zinc-950 chakra">
-            Update
-          </button>
+          {loader ? (
+            <p className="py-3 text-black btn-bg w-full rounded flex justify-center font-poppins text-lg shadow shadow-zinc-950 chakra">
+              <span className="loader rounded"></span>
+            </p>
+          ) : (
+            <button className="py-3 text-black btn-bg w-full rounded font-poppins text-lg shadow shadow-zinc-950 chakra">
+              Update
+            </button>
+          )}
         </div>
       </form>
     </div>

@@ -25,6 +25,7 @@ const Setting = () => {
   const { phone_number, username } = useAuth();
   const [phone, setPhone] = useState<string>(phone_number || "");
   const [userName, setUserName] = useState<string>(username || "");
+  const [loader, setLoader] = useState<boolean>(false);
 
   useEffect(() => {
     setPhone(phone_number || "");
@@ -42,6 +43,7 @@ const Setting = () => {
 
   const onSubmit = (data: FieldValues) => {
     console.log(data);
+    setLoader(true);
   };
 
   // const handleLanguage = (value: string) => {
@@ -173,9 +175,15 @@ const Setting = () => {
             )}
 
             <div className="mt-8 text-center">
-              <button className="py-3 text-black btn-bg w-full rounded font-poppins text-lg shadow shadow-zinc-950 chakra">
-                Update
-              </button>
+              {loader ? (
+                <p className="py-3 text-black btn-bg w-full rounded flex justify-center font-poppins text-lg shadow shadow-zinc-950 chakra">
+                  <span className="loader rounded"></span>
+                </p>
+              ) : (
+                <button className="py-3 text-black btn-bg w-full rounded font-poppins text-lg shadow shadow-zinc-950 chakra">
+                  Update
+                </button>
+              )}
             </div>
           </form>
         </div>

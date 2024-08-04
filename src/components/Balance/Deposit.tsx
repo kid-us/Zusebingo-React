@@ -2,7 +2,8 @@ import { useState } from "react";
 
 const Deposit = () => {
   const [amount, setAmount] = useState<string>("10");
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<boolean>(false);
+  const [loader, setLoader] = useState<boolean>(false);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
@@ -10,6 +11,7 @@ const Deposit = () => {
       setError(true);
       return;
     }
+    setLoader(true);
     console.log(Number(amount));
   };
 
@@ -37,13 +39,20 @@ const Deposit = () => {
             Deposit amount required and must be greater than 10 birr
           </p>
         )}
-        <button
-          type="submit"
-          className={`py-3 font-poppins text-black btn-bg mt-2
+
+        {loader ? (
+          <p className="py-3 text-black btn-bg w-full rounded flex justify-center font-poppins text-lg shadow shadow-zinc-950 chakra">
+            <span className="loader rounded"></span>
+          </p>
+        ) : (
+          <button
+            type="submit"
+            className={`py-3 font-poppins text-black btn-bg mt-2
            w-full rounded text-lg shadow shadow-zinc-950 chakra`}
-        >
-          Deposit
-        </button>
+          >
+            Deposit
+          </button>
+        )}
       </form>
     </div>
   );

@@ -2,6 +2,7 @@ import { logo } from "../../assets";
 import z from "zod";
 import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 // import { useState } from "react";
 
 const schema = z.object({
@@ -12,7 +13,7 @@ type FormData = z.infer<typeof schema>;
 
 const ForgotPassword = () => {
   // const [loginError, setLoginError] = useState(false);
-
+  const [loader, setLoader] = useState<boolean>(false);
   const {
     register,
     handleSubmit,
@@ -20,6 +21,7 @@ const ForgotPassword = () => {
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const onSubmit = (data: FieldValues) => {
+    setLoader(true);
     console.log(data);
   };
   return (
@@ -47,13 +49,13 @@ const ForgotPassword = () => {
               <div className="col-span-1">
                 <p className="bi-telephone-fill text-2xl ps-6 pt-3 text-red-500"></p>
               </div>
-              <div className="col-span-9 lg:ps-3 ms-5 border-l">
+              <div className="col-span-9 ms-5 border-l">
                 <input
                   {...register("phone")}
                   type="tel"
                   name="phone"
-                  className={`focus:outline-none chakra lg:ps-0 ps-3 h-full placeholder:text-gray-400 text-md w-full`}
-                  placeholder="Phone Bumber"
+                  className={`focus:outline-none chakra px-3 h-full placeholder:text-gray-400 text-md w-full`}
+                  placeholder="Phone Number"
                 />
               </div>
             </div>
@@ -64,9 +66,15 @@ const ForgotPassword = () => {
             )}
 
             <div className="mt-8 text-center">
-              <button className="py-3 text-black btn-bg w-full rounded font-poppins text-lg shadow shadow-zinc-950 chakra">
-                Reset Password
-              </button>
+              {loader ? (
+                <p className="py-3 text-black btn-bg w-full rounded flex justify-center font-poppins text-lg shadow shadow-zinc-950 chakra">
+                  <span className="loader rounded"></span>
+                </p>
+              ) : (
+                <button className="py-3 text-black btn-bg w-full rounded font-poppins text-lg shadow shadow-zinc-950 chakra">
+                  Reset Password
+                </button>
+              )}
             </div>
           </form>
         </div>

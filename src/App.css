@@ -25,7 +25,7 @@
 .bg {
   background-color: #ffe53b;
   background: linear-gradient(147deg, #ffe53b 0%, #ff2525 74%);
-  height: 100vh;
+  height: 100dvh;
 }
 
 .bg2 {

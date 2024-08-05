@@ -3,7 +3,9 @@ import z from "zod";
 import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { baseUrl } from "../../services/apiClient";
 
 const schema = z.object({
   password: z.string().min(4, {
@@ -18,10 +20,15 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 const Register = () => {
-  // const [loginError, setLoginError] = useState(false);
-  const [passwordType, setPasswordType] = useState(true);
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [confirmPasswordError, setConfirmPasswordError] = useState(false);
+  const navigate = useNavigate();
+
+  const [usernameError, setUsernameError] = useState<boolean>(false);
+  const [registerError, setRegisterError] = useState<boolean>(false);
+  const [phoneError, setPhoneError] = useState<boolean>(false);
+  const [passwordType, setPasswordType] = useState<boolean>(true);
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [confirmPasswordError, setConfirmPasswordError] =
+    useState<boolean>(false);
   const [loader, setLoader] = useState<boolean>(false);
   const {
     register,
@@ -35,8 +42,52 @@ const Register = () => {
       return;
     }
     setLoader(true);
-    console.log(data);
+
+    const RegData = {
+      username: data.username,
+      password: data.password,
+      phone_number: data.phone,
+    };
+
+    axios
+      .get(`${baseUrl}/auth/check-username?username=${data.username}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then(() => {
+        axios
+          .get(`${baseUrl}//auth/check-phone?phone_number=${data.phone}`, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+          .then(() => {
+            axios
+              .post(`${baseUrl}/auth/pre-register`, RegData, {
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              })
+              .then(() => {
+                navigate("/verify");
+              })
+              .catch((error) => {
+                console.log(error);
+                setRegisterError(true);
+              });
+          })
+          .catch((error) => {
+            console.log(error);
+            setPhoneError(true);
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+        setUsernameError(true);
+      });
   };
+
   return (
     <div className="bg3 pb-14">
       <div className="container mx-auto flex justify-center align-middle h-auto pt-14">
@@ -45,22 +96,32 @@ const Register = () => {
             <img src={logo} alt="Logo" className="w-28" />
           </div>
           <form className="mt-10" onSubmit={handleSubmit(onSubmit)}>
-            {/* {register && (
-              <p className="text-sm text-white mb-5 bg-red-700 rounded ps-2 py-2 text-center bi-heartbreak">
+            {!usernameError && (
+              <p className="text-sm text-white mb-5 bg-red-700 rounded ps-2 py-2 text-center bi-heartbreak font-poppins">
+                &nbsp; Username already taken!
+              </p>
+            )}
+            {registerError && (
+              <p className="text-sm text-white mb-5 bg-red-700 rounded ps-2 py-2 text-center bi-heartbreak font-poppins">
                 &nbsp; Something went wrong.
               </p>
-            )} */}
+            )}
+            {phoneError && (
+              <p className="text-sm text-white mb-5 bg-red-700 rounded ps-2 py-2 text-center bi-heartbreak font-poppins">
+                &nbsp; Phone number already exists!
+              </p>
+            )}
             {/* Username */}
-            <div className="bg-white overflow-hidden rounded-md lg:mb-4 mb-4 grid grid-cols-10 h-14 shadow shadow-zinc-900">
-              <div className="col-span-1">
-                <p className="bi-person-fill text-2xl ps-6 pt-3 text-red-500"></p>
+            <div className="bg-white overflow-hidden rounded-md lg:mb-4 mb-4 grid grid-cols-13 h-14 shadow shadow-zinc-900">
+              <div className="col-span-2">
+                <p className="bi-person-fill text-2xl text-center pt-3 text-red-500"></p>
               </div>
-              <div className="col-span-9 lg:ps-3 ms-5 border-l">
+              <div className="col-span-11  border-l">
                 <input
                   {...register("username")}
                   type="text"
                   name="username"
-                  className={`focus:outline-none chakra lg:ps-0 ps-3 h-full placeholder:text-gray-400 text-md w-full pe-3`}
+                  className={`focus:outline-none chakra px-3 h-full placeholder:text-gray-400 text-md w-full pe-3`}
                   placeholder="Username"
                 />
               </div>
@@ -72,16 +133,16 @@ const Register = () => {
             )}
 
             {/* Phone */}
-            <div className="bg-white overflow-hidden rounded-md lg:mb-4 mb-4 grid grid-cols-10 h-14 shadow shadow-zinc-900">
-              <div className="col-span-1">
-                <p className="bi-telephone-fill text-2xl ps-6 pt-3 text-red-500"></p>
+            <div className="bg-white overflow-hidden rounded-md lg:mb-4 mb-4 grid grid-cols-13 h-14 shadow shadow-zinc-900">
+              <div className="col-span-2">
+                <p className="bi-telephone-fill text-2xl text-center pt-3 text-red-500"></p>
               </div>
-              <div className="col-span-9 lg:ps-3 ms-5 border-l">
+              <div className="col-span-11 border-l">
                 <input
                   {...register("phone")}
                   type="tel"
                   name="phone"
-                  className={`focus:outline-none chakra lg:ps-0 ps-3 h-full placeholder:text-gray-400 text-md w-full`}
+                  className={`focus:outline-none chakra px-3 h-full placeholder:text-gray-400 text-md w-full`}
                   placeholder="Phone"
                 />
               </div>
@@ -93,22 +154,22 @@ const Register = () => {
             )}
 
             {/* Password */}
-            <div className="bg-white overflow-hidden rounded-md lg:mb-4 mb-4 grid grid-cols-10 h-14 shadow shadow-zinc-900">
-              <div className="col-span-1">
-                <p className="bi-lock-fill text-2xl ps-6 pt-3 text-red-500"></p>
+            <div className="bg-white overflow-hidden rounded-md lg:mb-4 mb-4 grid grid-cols-13 h-14 shadow shadow-zinc-900">
+              <div className="col-span-2">
+                <p className="bi-lock-fill text-2xl text-center pt-3 text-red-500"></p>
               </div>
-              <div className="col-span-8 lg:ps-3 ms-5 border-l border-r">
+              <div className="col-span-9 border-l border-r">
                 <input
                   {...register("password")}
                   type={!passwordType ? "text" : "password"}
                   name="password"
-                  className={`focus:outline-none chakra lg:ps-0 ps-3 h-full placeholder:text-gray-400 text-md w-full pe-3`}
+                  className={`focus:outline-none chakra px-3 h-full placeholder:text-gray-400 text-md w-full pe-3`}
                   placeholder="Password"
                 />
               </div>
               <div
                 onClick={() => setPasswordType(!passwordType)}
-                className="col-span-1 cursor-pointer pt-3"
+                className="col-span-2 cursor-pointer pt-3"
               >
                 <p
                   className={` ${
@@ -124,15 +185,15 @@ const Register = () => {
             )}
 
             {/* Confirm Password */}
-            <div className="bg-white rounded-md lg:mb-4 mb-4 grid grid-cols-10 h-14 shadow shadow-zinc-900">
-              <div className="col-span-1">
-                <p className="bi-lock-fill text-2xl ps-6 pt-3 text-red-500"></p>
+            <div className="bg-white rounded-md lg:mb-4 mb-4 grid grid-cols-13 h-14 shadow shadow-zinc-900">
+              <div className="col-span-2">
+                <p className="bi-lock-fill text-2xl text-center pt-3 text-red-500"></p>
               </div>
-              <div className="col-span-9 lg:ps-3 ms-5 border-l border-r">
+              <div className="col-span-11 border-l border-r">
                 <input
                   type="password"
                   name="password"
-                  className={`focus:outline-none chakra lg:ps-0 ps-3 h-full placeholder:text-gray-400 text-md w-full pe-3`}
+                  className={`focus:outline-none chakra px-3 h-full placeholder:text-gray-400 text-md w-full pe-3`}
                   placeholder="Confirm Password"
                   onChange={(e) => setConfirmPassword(e.currentTarget.value)}
                 />
@@ -145,15 +206,15 @@ const Register = () => {
             )}
 
             {/* Referral Code */}
-            <div className="bg-white overflow-hidden rounded-md lg:mb-4 mb-4 grid grid-cols-10 h-14 shadow shadow-zinc-900">
-              <div className="col-span-1">
-                <p className="bi-envelope-fill text-2xl ps-6 pt-3 text-red-500"></p>
+            <div className="bg-white overflow-hidden rounded-md lg:mb-4 mb-4 grid grid-cols-13 h-14 shadow shadow-zinc-900">
+              <div className="col-span-2">
+                <p className="bi-envelope-fill text-2xl text-center pt-3 text-red-500"></p>
               </div>
-              <div className="col-span-8 lg:ps-3 ms-5 border-l">
+              <div className="col-span-11 border-l">
                 <input
                   type="text"
                   name="referral"
-                  className={`focus:outline-none chakra lg:ps-0 ps-3 h-full placeholder:text-gray-400 text-md w-full pe-3`}
+                  className={`focus:outline-none chakra px-3 h-full placeholder:text-gray-400 text-md w-full pe-3`}
                   placeholder="Referral Code"
                 />
               </div>

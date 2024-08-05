@@ -10,7 +10,7 @@ const Balance = () => {
     <div className={`${balanceView === "withdraw" ? "bg3 pb-10" : "bg"}`}>
       <Nav />
       <div className="container mx-auto flex justify-center align-middle h-auto pt-24">
-        <div className="lg:w-[40%] lg:px-2 px-4">
+        <div className="lg:w-[40%] px-2">
           <p className="lg:mt-5 lg:mb-4 text-2xl">Balance</p>
           {/* Current Balance */}
           <div className="bg-white rounded-md lg:mb-5 mb-4 grid grid-cols-10 py-3 shadow shadow-zinc-900">

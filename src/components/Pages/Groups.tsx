@@ -6,7 +6,7 @@ const Groups = () => {
     <div className="bg">
       <Nav />
       <div className="container mx-auto flex justify-center align-middle h-auto pt-24">
-        <div className="lg:w-[38%] lg:px-2 px-4">
+        <div className="lg:w-[38%] px-2">
           <p className="chakra text-xl">
             Join groups with your desired entry amount and win!
           </p>

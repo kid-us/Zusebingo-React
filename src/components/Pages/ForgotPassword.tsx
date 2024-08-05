@@ -27,7 +27,7 @@ const ForgotPassword = () => {
   return (
     <div className="bg">
       <div className="container mx-auto flex justify-center align-middle h-auto pt-24">
-        <div className="lg:w-[38%] lg:px-2 px-4">
+        <div className="lg:w-[38%] px-2">
           <div className="flex justify-center">
             <img src={logo} alt="Logo" className="w-28" />
           </div>
@@ -45,11 +45,11 @@ const ForgotPassword = () => {
             </p>
 
             {/* Phone */}
-            <div className="bg-white overflow-hidden rounded-md lg:mb-4 mb-4 grid grid-cols-10 h-14 shadow shadow-zinc-900">
-              <div className="col-span-1">
-                <p className="bi-telephone-fill text-2xl ps-6 pt-3 text-red-500"></p>
+            <div className="bg-white overflow-hidden rounded-md lg:mb-4 mb-4 grid grid-cols-13 h-14 shadow shadow-zinc-900">
+              <div className="col-span-2">
+                <p className="bi-telephone-fill text-2xl text-center pt-3 text-red-500"></p>
               </div>
-              <div className="col-span-9 ms-5 border-l">
+              <div className="col-span-11 border-l">
                 <input
                   {...register("phone")}
                   type="tel"

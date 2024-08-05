@@ -262,7 +262,7 @@ const Register = () => {
             </div>
             <p className="mt-5 text-sm font-poppins">
               Already have an Account?{" "}
-              <Link to="/login" className="text-white">
+              <Link to="/login" className="text-white font-poppins">
                 Login
               </Link>
             </p>

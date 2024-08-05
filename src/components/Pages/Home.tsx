@@ -27,7 +27,7 @@ const Home = () => {
     <div className="bg">
       <Nav />
       <div className="container mx-auto flex justify-center align-middle h-auto pt-24">
-        <div className="lg:w-[38%] lg:px-2 px-4">
+        <div className="lg:w-[38%] px-2">
           <p className="lg:mt-5 lg:mb-4 lg:text-2xl text-xl font-poppins">
             Choose Bet Category
           </p>

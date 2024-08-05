@@ -110,7 +110,6 @@ function App() {
       <Route path="/request" element={<ForgotPassword />} />
 
       {/* 404 Page */}
-
       <Route path="/404" element={<Page404 />} />
       <Route path="*" element={<Navigate to="/404" />}></Route>
     </Routes>

@@ -17,7 +17,7 @@ const Nav = () => {
   useEffect(() => {
     axios
       .post<UserProps>(
-        `${baseUrl}/api/v2/auth/me`,
+        `${baseUrl}/auth/me`,
         {},
         {
           headers: {

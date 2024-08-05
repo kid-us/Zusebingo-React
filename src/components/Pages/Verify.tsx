@@ -73,6 +73,7 @@ const Verify: React.FC = () => {
         navigate("/login");
       })
       .catch((error) => {
+        setLoader(false);
         setVerifyError(true);
         console.log(error);
       });

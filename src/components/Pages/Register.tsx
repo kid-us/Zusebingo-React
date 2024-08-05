@@ -70,7 +70,7 @@ const Register = () => {
                 },
               })
               .then(() => {
-                navigate("/verify");
+                navigate(`/verify?phone=${data.phone}`);
               })
               .catch((error) => {
                 console.log(error);

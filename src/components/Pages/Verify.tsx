@@ -1,10 +1,34 @@
-import React, { useState, useRef, ChangeEvent, FormEvent } from "react";
+import React, {
+  useState,
+  useRef,
+  ChangeEvent,
+  FormEvent,
+  KeyboardEvent,
+  useEffect,
+} from "react";
 import { logo } from "../../assets";
+import axios from "axios";
+import { baseUrl } from "../../services/apiClient";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Verify: React.FC = () => {
+  const navigate = useNavigate();
+
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const phoneNo = searchParams.get("phone");
+  const [verifyError, setVerifyError] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!phoneNo) {
+      navigate("/register");
+    }
+  }, [phoneNo]);
+
   const [code, setCode] = useState<string[]>(["", "", "", "", ""]);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const [loader, setLoader] = useState<boolean>(false);
+  const allInputsFilled = code.every((value) => value !== "");
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>, index: number) => {
     const value = e.target.value;
@@ -18,15 +42,41 @@ const Verify: React.FC = () => {
     }
   };
 
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>, index: number) => {
+    if (e.key === "Backspace") {
+      if (code[index] === "" && index > 0) {
+        inputRefs.current[index - 1]?.focus();
+      }
+      const newCode = [...code];
+      newCode[index] = "";
+      setCode(newCode);
+    }
+  };
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const verificationCode = code.join("");
     console.log(verificationCode);
     setLoader(true);
-    // Implement verification logic here
-  };
 
-  const allInputsFilled = code.every((value) => value !== "");
+    axios
+      .post(
+        `${baseUrl}/auth/verify?otp=${verificationCode}&phone_number=${phoneNo}`,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then(() => {
+        navigate("/login");
+      })
+      .catch((error) => {
+        setVerifyError(true);
+        console.log(error);
+      });
+  };
 
   return (
     <div className="bg">
@@ -39,9 +89,16 @@ const Verify: React.FC = () => {
             <h1 className="text-white text-2xl">Verify Phone Number</h1>
 
             <p className="mt-3 chakra">
-              Enter the numbers we send to verify your phone number.
+              Enter the otp we send to{" "}
+              <span className="text-white font-poppins">{phoneNo}</span> and
+              verify your phone number.
             </p>
-            <div className="grid grid-cols-5 gap-x-3 mt-8">
+            {verifyError && (
+              <p className="text-sm text-white mb-5 bg-red-700 rounded ps-2 py-2 text-center bi-heartbreak font-poppins mt-3">
+                &nbsp; Invalid OTP!
+              </p>
+            )}
+            <div className="grid grid-cols-5 gap-x-3 mt-5">
               {code.map((value, index) => (
                 <div key={index}>
                   <input
@@ -50,6 +107,7 @@ const Verify: React.FC = () => {
                     maxLength={1}
                     value={value}
                     onChange={(e) => handleChange(e, index)}
+                    onKeyDown={(e) => handleKeyDown(e, index)}
                     ref={(el) => (inputRefs.current[index] = el)}
                     autoFocus={index === 0}
                   />

@@ -96,7 +96,7 @@ const Register = () => {
             <img src={logo} alt="Logo" className="w-28" />
           </div>
           <form className="mt-10" onSubmit={handleSubmit(onSubmit)}>
-            {!usernameError && (
+            {usernameError && (
               <p className="text-sm text-white mb-5 bg-red-700 rounded ps-2 py-2 text-center bi-heartbreak font-poppins">
                 &nbsp; Username already taken!
               </p>

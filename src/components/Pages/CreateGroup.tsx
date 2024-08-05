@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 const CreateGroup = () => {
   // Handle Category
-  const handleCategory = (category: number) => {
-    console.log(category);
+  const handleCategory = (category: number, cate: string) => {
+    console.log(category, cate);
   };
 
   return (
@@ -19,26 +19,33 @@ const CreateGroup = () => {
 
           {/* <!-- Category Form --> */}
           <form className="pt-5">
-            {/* <Input amount="5" /> */}
             <Input
               numAmount={10}
-              amount="10"
-              onClick={(category: number) => handleCategory(category)}
+              amount="ten"
+              onClick={(numCategory: number, stringCategory: string) =>
+                handleCategory(numCategory, stringCategory)
+              }
             />
             <Input
               numAmount={25}
-              amount="25"
-              onClick={(category: number) => handleCategory(category)}
+              amount="twenty-five"
+              onClick={(numCategory: number, stringCategory: string) =>
+                handleCategory(numCategory, stringCategory)
+              }
             />
             <Input
               numAmount={50}
-              amount="50"
-              onClick={(category: number) => handleCategory(category)}
+              amount="fifty"
+              onClick={(numCategory: number, stringCategory: string) =>
+                handleCategory(numCategory, stringCategory)
+              }
             />
             <Input
               numAmount={100}
-              amount="100"
-              onClick={(category: number) => handleCategory(category)}
+              amount="hundred"
+              onClick={(numCategory: number, stringCategory: string) =>
+                handleCategory(numCategory, stringCategory)
+              }
             />
 
             <p className="mt-5 text-sm font-poppins">

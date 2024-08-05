@@ -61,7 +61,6 @@ const Home = () => {
 
           {/* <!-- Category Form --> */}
           <form className="pt-5">
-            {/* <Input amount="5" /> */}
             <Input
               numAmount={10}
               amount="ten"

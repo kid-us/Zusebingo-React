@@ -84,11 +84,11 @@ const Login = () => {
               </p>
             )}
             {/* Username */}
-            <div className="bg-white rounded-md overflow-hidden lg:mb-4 mb-4 grid grid-cols-10 h-14 shadow shadow-zinc-900">
-              <div className="col-span-1">
-                <p className="bi-person-fill text-2xl ps-6 pt-3 text-red-500"></p>
+            <div className="bg-white rounded-md overflow-hidden lg:mb-4 mb-4 grid grid-cols-13 h-14 shadow shadow-zinc-900">
+              <div className="col-span-2">
+                <p className="bi-person-fill text-2xl text-center pt-3 text-red-500"></p>
               </div>
-              <div className="col-span-9 ms-5 border-l">
+              <div className="col-span-11 border-l w-full">
                 <input
                   {...register("username")}
                   type="text"
@@ -105,11 +105,11 @@ const Login = () => {
             )}
 
             {/* Password */}
-            <div className="bg-white rounded-md lg:mb-4 mb-4 grid grid-cols-10 h-14 shadow shadow-zinc-900">
-              <div className="col-span-1">
-                <p className="bi-lock-fill text-2xl ps-6 pt-3 text-red-500"></p>
+            <div className="bg-white rounded-md lg:mb-4 mb-4 grid grid-cols-13 h-14 shadow shadow-zinc-900">
+              <div className="col-span-2">
+                <p className="bi-lock-fill text-2xl text-center pt-3 text-red-500"></p>
               </div>
-              <div className="col-span-8 ms-5 border-l border-r">
+              <div className="col-span-9 border-l border-r w-full">
                 <input
                   {...register("password")}
                   type={!passwordType ? "text" : "password"}
@@ -120,15 +120,16 @@ const Login = () => {
               </div>
               <div
                 onClick={() => setPasswordType(!passwordType)}
-                className="col-span-1 cursor-pointer pt-3"
+                className="col-span-2 cursor-pointer pt-3"
               >
                 <p
                   className={` ${
                     passwordType ? "bi-eye-fill" : "bi-eye-slash-fill"
-                  } text-xl pt-1 lg:ps-3 ps-2 text-red-500`}
+                  } text-xl pt-1 text-red-500 text-center`}
                 ></p>
               </div>
             </div>
+
             {errors.password && (
               <p className="text-xs text-white mb-5 bg-red-700 rounded ps-2 py-1 chakra">
                 {errors.password.message}

@@ -20,7 +20,7 @@ const Menu = ({ menu, onMenu, balance, username }: Props) => {
   const handleLogout = () => {
     axios
       .post(
-        `${baseUrl}/api/v2/auth/logout`,
+        `${baseUrl}/auth/logout`,
         {},
         {
           headers: {

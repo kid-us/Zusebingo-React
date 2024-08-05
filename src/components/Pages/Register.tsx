@@ -57,7 +57,7 @@ const Register = () => {
       })
       .then(() => {
         axios
-          .get(`${baseUrl}//auth/check-phone?phone_number=${data.phone}`, {
+          .get(`${baseUrl}/auth/check-phone?phone_number=${data.phone}`, {
             headers: {
               "Content-Type": "application/json",
             },

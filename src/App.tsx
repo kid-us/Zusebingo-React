@@ -16,6 +16,7 @@ import Groups from "./components/Pages/Groups";
 import CreateGroup from "./components/Pages/CreateGroup";
 import Game from "./components/Pages/Game";
 import Protected from "./components/Protected/Protected";
+import MyGroup from "./components/Pages/MyGroup";
 
 function App() {
   return (
@@ -85,6 +86,15 @@ function App() {
           </Protected>
         }
       />
+      <Route
+        path="/my-group"
+        element={
+          <Protected>
+            <MyGroup />
+          </Protected>
+        }
+      ></Route>
+
       <Route
         path="/license"
         element={

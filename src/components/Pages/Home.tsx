@@ -38,11 +38,13 @@ const Home = () => {
           </p>
 
           <div className="mt-5 text-center w-full">
+            {/* {!can_create_group_game && ( */}
             <Link to={"/groups"}>
               <p className="py-3 text-black btn-bg w-full rounded font-poppins text-lg shadow shadow-zinc-950 chakra">
                 Join Group Games
               </p>
             </Link>
+            {/* )} */}
           </div>
 
           {balanceError && (
@@ -70,7 +72,7 @@ const Home = () => {
             />
             <Input
               numAmount={25}
-              amount="twenty-five"
+              amount="twenty_five"
               onClick={(numCategory: number, stringCategory: string) =>
                 handleCategory(numCategory, stringCategory)
               }
@@ -102,7 +104,10 @@ const Home = () => {
 
             <p className="mt-5 text-sm font-poppins">
               Please reach out to our{" "}
-              <Link to="https://t.me/+UGpMJ8GPTVw2MGUx" className="text-white">
+              <Link
+                to="https://t.me/+UGpMJ8GPTVw2MGUx"
+                className="text-white font-poppins"
+              >
                 Telegram
               </Link>{" "}
               customer support for assistance.

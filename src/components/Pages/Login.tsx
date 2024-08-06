@@ -48,7 +48,7 @@ const Login = () => {
       .then(() => {
         axios
           .post(
-            `${baseUrl}/api/v2/auth/me`,
+            `${baseUrl}/auth/me`,
             {},
             {
               headers: {

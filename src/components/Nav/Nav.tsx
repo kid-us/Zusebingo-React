@@ -47,7 +47,7 @@ const Nav = () => {
 
   return (
     <>
-      <div className={`fixed nav-bg shadow w-full z-50 ${menu && "bg2"}`}>
+      <div className={`fixed nav-bg shadow w-full z-40 ${menu && "bg2"}`}>
         <div className="container mx-auto py-1">
           <div className="flex justify-between">
             <Link to="/" className="flex">

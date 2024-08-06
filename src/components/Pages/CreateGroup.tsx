@@ -1,11 +1,24 @@
 import Nav from "../Nav/Nav";
 import { Input } from "../BetInputs/Input";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import useAuth from "../../store/useAuth";
+import socket from "../../services/socket";
 
 const CreateGroup = () => {
+  const { id } = useAuth();
+  const navigate = useNavigate();
+
   // Handle Category
-  const handleCategory = (category: number, cate: string) => {
-    console.log(category, cate);
+  const handleCategory = (category: string) => {
+    const data = {
+      bet_amount: category,
+      user_id: id,
+    };
+
+    socket.emit("create_group_game", data, () => {
+      navigate("/my-group");
+    });
   };
 
   return (
@@ -22,35 +35,30 @@ const CreateGroup = () => {
             <Input
               numAmount={10}
               amount="ten"
-              onClick={(numCategory: number, stringCategory: string) =>
-                handleCategory(numCategory, stringCategory)
-              }
+              onClick={() => handleCategory("ten")}
             />
             <Input
               numAmount={25}
-              amount="twenty-five"
-              onClick={(numCategory: number, stringCategory: string) =>
-                handleCategory(numCategory, stringCategory)
-              }
+              amount="twenty_five"
+              onClick={() => handleCategory("twenty_five")}
             />
             <Input
               numAmount={50}
               amount="fifty"
-              onClick={(numCategory: number, stringCategory: string) =>
-                handleCategory(numCategory, stringCategory)
-              }
+              onClick={() => handleCategory("fifty")}
             />
             <Input
               numAmount={100}
               amount="hundred"
-              onClick={(numCategory: number, stringCategory: string) =>
-                handleCategory(numCategory, stringCategory)
-              }
+              onClick={() => handleCategory("hundred")}
             />
 
             <p className="mt-5 text-sm font-poppins">
               Please reach out to our{" "}
-              <Link to="https://t.me/+UGpMJ8GPTVw2MGUx" className="text-white">
+              <Link
+                to="https://t.me/+UGpMJ8GPTVw2MGUx"
+                className="text-white font-poppins"
+              >
                 Telegram
               </Link>{" "}
               customer support for assistance.

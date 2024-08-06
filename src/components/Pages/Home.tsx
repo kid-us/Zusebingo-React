@@ -32,18 +32,18 @@ const Home = () => {
             Choose Bet Category
           </p>
 
-          <p className="text-white chakra lg:text-md text-sm mt-2">
+          <p className="text-white font-poppins lg:text-md text-sm mt-2">
             <span className="bi-gift-fill text-red-700"></span> Rev up the Fun:
             Join Group Games & Score Big Wins!
           </p>
 
           <div className="mt-5 text-center w-full">
             {/* {!can_create_group_game && ( */}
-            <Link to={"/groups"}>
-              <p className="py-3 text-black btn-bg w-full rounded font-poppins text-lg shadow shadow-zinc-950 chakra">
+            {/* <Link to={"/groups"}>
+              <p className="py-3 text-black btn-bg w-full rounded font-poppins font-bold text-lg shadow shadow-zinc-950">
                 Join Group Games
               </p>
-            </Link>
+            </Link> */}
             {/* )} */}
           </div>
 
@@ -95,7 +95,7 @@ const Home = () => {
             {can_create_group_game && (
               <div className="mt-8 text-center">
                 <Link to={"/create-group"}>
-                  <p className="py-3 text-black btn-bg w-full rounded font-poppins text-lg shadow shadow-zinc-950 chakra">
+                  <p className="py-3 text-black btn-bg w-full rounded font-poppins text-lg shadow shadow-zinc-950 font-bold">
                     Create Group Game
                   </p>
                 </Link>

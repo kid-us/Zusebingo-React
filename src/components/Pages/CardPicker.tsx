@@ -110,7 +110,6 @@ const CardPicker = () => {
               {numbers.map((number) => (
                 <div
                   key={number}
-                  onClick={() => handleSelectedNumber(number)}
                   className={`${
                     selectedNumbers.includes(number)
                       ? "bg-gray-900 shadow-none"
@@ -118,7 +117,8 @@ const CardPicker = () => {
                   }   shadow-zinc-900 rounded shadow me-1 mb-2 lg:p-2 p-1`}
                 >
                   <p
-                    className={`text-center chakra pt-1 ${
+                    onClick={() => handleSelectedNumber(number)}
+                    className={`text-center font-poppins pt-1 ${
                       selectedNumbers.includes(number)
                         ? "text-gray-400"
                         : "text-red-700"

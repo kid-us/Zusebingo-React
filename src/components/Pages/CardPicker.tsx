@@ -50,6 +50,8 @@ const CardPicker = () => {
 
   // Handle Number selecting
   const handleSelectedNumber = (num: number): void => {
+    console.log(num);
+
     const data = {
       username: username,
       user_id: id,
@@ -73,7 +75,7 @@ const CardPicker = () => {
           );
         } else if (response.length === 2) {
           setError(true);
-          setErrorMsg("You already exist in this game.");
+          setErrorMsg("You already in this game.");
         } else if (response.length === 2) {
           setError(true);
           setErrorMsg(
@@ -109,6 +111,10 @@ const CardPicker = () => {
             <div className="grid lg:grid-cols-12 md:grid-cols-12 grid-cols-8 mt-6 h-auto">
               {numbers.map((number) => (
                 <div
+                  onClick={() =>
+                    !selectedNumbers.includes(number) &&
+                    handleSelectedNumber(number)
+                  }
                   key={number}
                   className={`${
                     selectedNumbers.includes(number)
@@ -117,7 +123,6 @@ const CardPicker = () => {
                   }   shadow-zinc-900 rounded shadow me-1 mb-2 lg:p-2 p-1`}
                 >
                   <p
-                    onClick={() => handleSelectedNumber(number)}
                     className={`text-center font-poppins pt-1 ${
                       selectedNumbers.includes(number)
                         ? "text-gray-400"
